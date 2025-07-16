@@ -1,0 +1,331 @@
+.companies-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 70px 0;
+  background: #9e9e9e16; /* léger fond pour détacher la section */
+}
+.companies-wrapper h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  letter-spacing: 0.03em;
+  color: #3c3636;
+text-align: center; /* <-- ajoute ça */
+
+}
+.companies-inner {
+  position: relative;
+  max-width: 1100px;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 90px;
+  box-sizing: border-box;
+}
+
+/* Flèches */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #000000; /* fond doux vert clair */
+  color: #ffffff;
+  border: 2px solid #000000;
+  font-size: 1.8rem;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  z-index: 5;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-btn:hover {
+  background-color: #000000;
+  color: #fff;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.scroll-btn.left {
+  left: 10px;
+}
+
+.scroll-btn.right {
+  right: 10px;
+}
+
+/* Liste de cards scrollable */
+.company-list {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px 0;
+  box-sizing: border-box;
+  scrollbar-width: none;
+}
+
+.company-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card */
+.company-card {
+  min-width: 300px;
+  max-width: 300px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.company-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.company-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(50, 151, 72, 0.05), rgba(101, 174, 94, 0.05));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.company-card:hover::before {
+  opacity: 1;
+}
+
+.company-cover {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 18px 18px 0 0;
+  transition: transform 0.4s ease;
+}
+
+.company-card:hover .company-cover {
+  transform: scale(1.04);
+}
+
+/* Contenu */
+.company-content {
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.company-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: -40px;
+  left: 20px;
+  background: #fff;
+  transition: transform 0.3s ease;
+}
+
+.company-card:hover .company-logo {
+  transform: scale(1.08);
+}
+
+.company-content h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #333;
+  margin-top: 45px;
+  margin-bottom: 10px;
+  line-height: 1.3;
+  transition: color 0.3s ease;
+}
+
+.company-card:hover .company-content h2 {
+  color: #329748;
+}
+
+/* Description */
+.company-content p:first-of-type {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 4.5em;
+}
+
+.company-content p {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.company-content p strong {
+  color: #333;
+  font-weight: 600;
+  margin-right: 8px;
+  min-width: 70px;
+}
+
+.company-content p:last-of-type {
+  margin-bottom: 0;
+}
+
+.company-content p:nth-of-type(3) {
+  color: #329748;
+  font-weight: 600;
+}
+
+.company-content p:nth-of-type(4) {
+  color: #65ae5e;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .scroll-btn {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .company-card {
+    min-width: 260px;
+    max-width: 260px;
+  }
+
+  .company-logo {
+    width: 60px;
+    height: 60px;
+    top: -30px;
+    left: 16px;
+  }
+
+  .company-content h2 {
+    font-size: 1.2rem;
+    margin-top: 35px;
+  }
+
+  .company-content p {
+    font-size: 0.85rem;
+  }
+
+  .company-content p strong {
+    min-width: 60px;
+  }
+}
+.company-logo-marquee {
+  overflow: hidden;
+  width: 100%;
+  background-color: #f5f5f5;
+  margin-top: 20px;
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+}
+
+.logo-track {
+  display: flex;
+  align-items: center;
+  gap: 40px; /* Espace entre les logos pour éviter les collisions visuelles */
+  width: fit-content;
+  animation: scrollLogos 20s linear infinite; /* Durée ajustée pour plus de lisibilité */
+  will-change: transform;
+}
+
+
+
+.marquee-logo {
+  height: 50px;
+  margin: 0 30px;
+  filter: grayscale(100%) brightness(1.2);
+  opacity: 0.9;
+  mix-blend-mode: multiply;
+  flex-shrink: 0;
+}
+.company-logo-marquee {
+  overflow: hidden;
+  width: 100%;
+}
+
+
+@keyframes scrollLogos {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%); /* ou -100% selon la duplication des logos */
+  }
+}
+/* Bouton Details dans chaque carte */
+.details-btn {
+  margin-top: 14px;
+  align-self: flex-end; /* ✅ aligne à droite */
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: bold; /* ✅ texte gras */
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid #000000; /* ✅ bordure noire */
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.details-btn:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+
+/* Bouton Explore More en bas */
+.explore-more-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.explore-more-btn {
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #40bc48;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.explore-more-btn:hover {
+  background-color: #267b38;
+  transform: translateY(-2px);
+}
+
+
+
+
+

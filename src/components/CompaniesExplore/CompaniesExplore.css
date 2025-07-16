@@ -1,78 +1,78 @@
-:root {
-  --primary-green: #2ecc71;
-  --primary-green-dark: #27ae60;
-  --bg-light: #f9f9f9;
-  --text-dark: #333;
-  --text-muted: #666;
-  --border-radius: 10px;
-}
+/* ExploreCompanies.css */
 
-/* Container */
-.explore-menu {
-  padding: 3rem 2rem;
-  background-color: var(--bg-light);
+.explore-companies {
   text-align: center;
+  padding: 50px 15px;
+  background-color: #ffffff;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
 }
 
-.explore-menu h1 {
-  font-size: 2.4rem;
-  margin-bottom: 0.5rem;
-  color: var(--text-dark);
+.explore-companies h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  letter-spacing: 0.03em;
+  color: #3c3636;
 }
 
-.explore-menu-text {
-  font-size: 1rem;
-  color: var(--text-muted);
-  margin-bottom: 2.5rem;
+.explore-companies p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 45px;
+  line-height: 1.5;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Category List */
-.explore-menu-list {
+.explore-companies-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
   justify-content: center;
+  gap: 14px;
 }
 
-/* Item Style */
-.explore-menu-list-item {
-  background-color: white;
-  border: 2px solid transparent;
-  padding: 1rem 1.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+.explore-companies-buttons button {
+  padding: 8px 20px;
+  border: 2px solid #a3d9a563;
+  border-radius: 30px;
+  background-color: #e8f5e9;
+  font-size: 0.9rem;
+  color: #2c3e50;
   cursor: pointer;
-  transition: all 0.25s ease;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-dark);
-  min-width: 180px;
-  text-align: center;
+  white-space: nowrap;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(39, 174, 96, 0.2);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
-.explore-menu-list-item:hover {
-  border-color: var(--primary-green);
-  background-color: #f0fff8;
-  transform: translateY(-3px);
-}
-
-/* Active Category */
-.explore-menu-list-item.active {
-  background-color: var(--primary-green);
+.explore-companies-buttons button:hover:not(.active) {
+  background-color: #27ae60;
   color: white;
-  border-color: var(--primary-green-dark);
-  box-shadow: 0 6px 16px rgba(46, 204, 113, 0.3);
+  border-color: #27ae60;
+  box-shadow: 0 5px 12px rgba(39, 174, 96, 0.5);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .explore-menu h1 {
-    font-size: 1.8rem;
+.explore-companies-buttons button.active {
+  background-color: #27ae60;
+  color: white;
+  border-color: #27ae60;
+  box-shadow: 0 6px 14px rgba(39, 174, 96, 0.6);
+}
+
+/* Responsive for small screens */
+@media (max-width: 600px) {
+  .explore-companies-buttons {
+    align-items: center;
   }
 
-  .explore-menu-list-item {
-    min-width: 140px;
-    padding: 0.8rem 1.2rem;
-    font-size: 0.95rem;
+  .explore-companies-buttons button {
+    width: auto;
+    max-width: none;
+    padding: 6px 18px;
+    font-size: 0.85rem;
   }
 }
