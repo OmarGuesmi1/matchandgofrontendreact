@@ -1,11 +1,5 @@
 import namelogo from './namelogo.png'
-import uberCover from './ubercouverture.jpg'
-import uberLogo from './uberprofile.webp'
-import googleCover from './googlecouverture.jpg'
-import googleLogo from './googleprofile.jpg'
-import microsoftcouverture from './microsoftcouverture.jpg'
-import microsoftprofile from './microsoftprofile.webp'
-import netflixCover from './netflixcouverture.jpg'
+
 import jobsection from './jobsection.png'
 import jobsection2 from './jobsection2.png'
 import candidaturesection from './candidaturesection.png'
@@ -27,36 +21,17 @@ import ooredooCover from './ooreedoocouverture.jpg';
 import orangeLogo from './orangeprofile.jpg';
 import orangeCover from './orangecouverture.jpg';
 
-// Tunisie Telecom
-import tunisieTelecomLogo from './telecomprofile.jpg';
-import tunisieTelecomCover from './telecomcouverture.jpg';
-
-// Vermeg
-import vermegLogo from './vermegprofile.png';
-import vermegCover from './vermegcouverture.jpg';
-
-// Telnet
-import telnetLogo from './telnetprofile.jpg';
-import telnetCover from './telecomcouverture.jpg';
 
 // Sofrecom Tunisie
 import sofrecomLogo from './sofrecomprofile.jpg';
 import sofrecomCover from './sofrecomcouverture.jpg';
 
-// Wevioo
-import weviooLogo from './wevioprofile.png';
-import weviooCover from './weviocouverture.jpg';
 
 
 // Talan Tunisie
 import talanLogo from './talanprofile.png';
 import talanCover from './talancouverture.png';
 
-import flouciLogo from './flouciprofile.png';
-import flouciCover from './floucicouverture.webp';
-
-import inDriveLogo from './indriveprofile.png';
-import inDriveCover from './indrivecouverture.png';
 
 import spotifyLogo from './spotifyprofile.webp';
 import spotifyCover from './spotifycouverture.avif';
