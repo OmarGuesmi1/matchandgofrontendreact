@@ -67,6 +67,11 @@ import fatimaPhoto from './user3.avif';
 import leoPhoto from './user4.jpg';
 import amiraPhoto from './user5.jpg';
 import matchgorforum from './matchgorforum.png';
+import auth from './1.png'
+import auth2 from './2.png'
+import auth3 from './3.png'
+import matchgoauth from './Match&Goauth.png'
+
 
 export const assets = {
     namelogo,
@@ -75,7 +80,11 @@ export const assets = {
     jobsection2,
     candidaturesection,
     quote,
-    matchgorforum
+    auth,
+    auth2,
+    auth3,
+    matchgorforum,
+    matchgoauth
 }
 
 

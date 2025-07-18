@@ -2,6 +2,8 @@ import React from 'react';
 import './NavBar.css'; // Assuming you have a CSS file for styling
 import { useState } from 'react';
 import { assets } from '../../assets/assets'; // Adjust the path as necessary
+import { Link } from 'react-router-dom';
+
 const NavBar = () => {
     const [menu, setMenu] = useState("home");
   return (
@@ -17,8 +19,8 @@ const NavBar = () => {
                 <ul className='navbar-right-menu'>
                     <li onClick={() => setMenu("applications")} className={menu === "applications" ? "active" : ""}>Applications</li>
                     <li>
-                        <button>Sign in</button>
-                    </li>
+                    <Link to="/SignIn" className="signin-btn" >Sign in</Link>                     
+                     </li>
                 </ul>
             </div>
         </div>
