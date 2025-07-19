@@ -44,9 +44,7 @@ const SignIn = () => {
       {/* Colonne gauche */}
       <div className="signin-left" style={{ backgroundColor: bgColor }}>
         {/* Logo */}
-        <div className="signin-logo-top">
-          <img src={assets.matchgoauth} alt="Logo" className="logo-image-large" />
-        </div>
+        
 
         {/* Image + flèches */}
         <div className="signin-image-with-arrows">

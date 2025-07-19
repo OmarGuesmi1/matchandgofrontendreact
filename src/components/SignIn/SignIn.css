@@ -2,10 +2,11 @@
   display: flex;
   height: 100vh;
   font-family: 'Poppins', sans-serif;
+  flex-direction: row; /* côte à côte */
 }
 
+/* Partie gauche - 40% */
 .signin-left {
-  flex: 1;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -13,8 +14,12 @@
   justify-content: center;
   padding: 40px 20px;
   transition: background-color 0.5s ease;
+  background-color: #0c0c0c;
+  flex: 0 0 40%; /* largeur fixe 40% */
+  overflow-y: auto; /* scroll si besoin */
 }
 
+/* Logo top gauche */
 .signin-logo-top {
   position: absolute;
   top: 20px;
@@ -25,6 +30,7 @@
   height: 40px;
 }
 
+/* Images avec flèches */
 .signin-image-with-arrows {
   display: flex;
   align-items: center;
@@ -41,6 +47,7 @@
   transition: all 0.5s ease;
 }
 
+/* Boutons flèches */
 .arrow-btn {
   background: rgba(255, 255, 255, 0.3);
   border: none;
@@ -57,6 +64,7 @@
   color: #333;
 }
 
+/* Texte à gauche */
 .signin-text {
   text-align: center;
   color: #fff;
@@ -79,69 +87,32 @@
   font-weight: 400;
 }
 
+/* Partie droite fixe - 60% */
 .signin-right {
-  flex: 1;
+  flex: 0 0 60%; /* largeur fixe 60% */
+  max-width: 1000px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   padding: 40px;
   background-color: #ffffff;
+  height: 100vh;
+  overflow-y: auto; /* scroll si contenu dépasse */
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .signin-container {
-    flex-direction: column;
-  }
-
-  .signin-left, .signin-right {
-    flex: none;
-    width: 100%;
-    padding: 20px;
-  }
-
-  .signin-logo-top {
-    left: 20px;
-    top: 10px;
-  }
-
-  .signin-image {
-    max-width: 100%;
-    max-height: 200px;
-  }
-
-  .arrow-btn {
-    font-size: 20px;
-    padding: 10px 14px;
-  }
-
-  .signin-text h2 {
-    font-size: 20px;
-  }
-
-  .signin-text h4 {
-    font-size: 13px;
-  }
-}
-/* partie droite */
-.signin-right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  background-color: #ffffff;
-}
-
+/* Carte dans la partie droite */
 .signin-card {
   width: 100%;
-  max-width: 680px;
   background-color: #ffffff;
   padding: 40px 30px;
   border-radius: 16px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
   text-align: center;
   font-family: 'Poppins', sans-serif;
-  margin-top: 80px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .signin-title {
@@ -159,23 +130,31 @@
 }
 
 .signin-form input {
-  padding: 14px 16px;
+  padding: 10px 12px;        /* moins de padding */
+  font-size: 14px;           /* police un peu plus petite */
   border: 1px solid #ddd;
   border-radius: 10px;
-  font-size: 15px;
   background-color: #f9f9f9;
+  width: 400px;              /* largeur fixe réduite */
+  max-width: 90%;            /* responsive */
+  margin: 0 auto;            /* centre horizontalement */
+  box-sizing: border-box;
 }
 
 .btn-signin {
   background-color: #4CAF50;
   color: white;
-  padding: 12px;
+  padding: 10px 16px;        /* moins de padding */
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;           /* police un peu plus petite */
   font-weight: 500;
   transition: background 0.3s ease;
+  width: 280px;              /* même largeur que les inputs */
+  max-width: 90%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .btn-signin:hover {
@@ -237,4 +216,57 @@
 
 .signin-note strong {
   color: #444;
+}
+
+/* Responsive - passage en colonne, partie gauche + droite 100% */
+@media (max-width: 768px) {
+  .signin-container {
+    flex-direction: column; /* passage en colonne */
+    height: auto;           /* hauteur automatique */
+  }
+
+  .signin-left {
+    flex: none;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    overflow-y: visible;
+  }
+
+  .signin-right {
+    flex: none;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    overflow-y: visible;
+  }
+
+  .signin-logo-top {
+    left: 20px;
+    top: 10px;
+  }
+
+  .signin-image {
+    max-width: 100%;
+    max-height: 200px;
+  }
+
+  .arrow-btn {
+    font-size: 20px;
+    padding: 10px 14px;
+  }
+
+  .signin-text h2 {
+    font-size: 20px;
+  }
+
+  .signin-text h4 {
+    font-size: 13px;
+  }
+
+  .signin-card {
+    margin: 0;
+    height: auto;
+    border-radius: 16px;
+  }
 }
