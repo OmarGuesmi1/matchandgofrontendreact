@@ -45,6 +45,10 @@ import matchgorforum from './matchgorforum.png';
 import auth from './1.png'
 import auth2 from './2.png'
 import auth3 from './3.png'
+import signinback1 from './signinback1.jpg'
+import signinback2 from './signinback2.jpg'
+import signinback3 from './signinback3.jpg'
+
 import matchgoauth from './Match&Goauth.png'
 
 
@@ -59,7 +63,10 @@ export const assets = {
     auth2,
     auth3,
     matchgorforum,
-    matchgoauth
+    matchgoauth,
+    signinback1,
+    signinback2,
+    signinback3
 }
 
 

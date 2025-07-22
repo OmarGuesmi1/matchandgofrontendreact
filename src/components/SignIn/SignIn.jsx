@@ -41,10 +41,12 @@ const SignIn = () => {
 
   return (
     <div className="signin-container">
-      {/* Colonne gauche */}
+      {/* Partie gauche */}
       <div className="signin-left" style={{ backgroundColor: bgColor }}>
-        {/* Logo */}
-        
+        {/* Logo centré */}
+        <div className="signin-logo">
+          <img src={assets.matchgoauth} alt="Match&Go Logo" className="logo-image-large" />
+        </div>
 
         {/* Image + flèches */}
         <div className="signin-image-with-arrows">
@@ -60,39 +62,46 @@ const SignIn = () => {
         </div>
       </div>
 
-      {/* Colonne droite */}
-     <div className="signin-card">
-  <h2 className="signin-title">Welcome Back to Match&Go</h2>
+      {/* Partie droite */}
+      <div className="signin-right">
+        <div className="signin-card">
+          {/* Logo centré */}
+          <div className="signin-logo-top">
+            <img src={assets.namelogo} alt="Match&Go Logo" className="logo-image-top" />
+          </div>
 
-  <form className="signin-form">
-    <input type="email" placeholder="Email address" required />
-    <input type="password" placeholder="Password" required />
-    <button type="submit" className="btn-signin">Sign In</button>
-  </form>
+          <h2 className="signin-title">Welcome Back to Match&Go</h2>
 
-  <div className="signin-or">or sign in with</div>
-  <div className="signin-socials">
-    <button className="social-btn">
-      <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google" />
-    </button>
-    <button className="social-btn">
-      <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn" />
-    </button>
-  </div>
+          <form className="signin-form">
+            <input type="email" placeholder="Email address" required />
+            <input type="password" placeholder="Password" required />
+            <button type="submit" className="btn-signin">Sign In</button>
+          </form>
 
-  <div className="signin-links">
-    <a href="#" className="link">Forgot Password?</a>
-    <span> | </span>
-    <a href="#" className="link">Sign Up</a>
-  </div>
+          <div className="signin-or">or sign in with</div>
 
-  <div className="signin-note">
-    <strong>Looking for your next opportunity?</strong><br />
-    Sign in to explore curated job offers, track your applications, and<br />
-    connect with recruiters across your industry.
-  </div>
-</div>
+          <div className="signin-socials">
+            <button className="social-btn">
+              <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google" />
+            </button>
+            <button className="social-btn">
+              <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn" />
+            </button>
+          </div>
 
+          <div className="signin-links">
+            <a href="#" className="link">Forgot Password?</a>
+            <span> | </span>
+            <a href="#" className="link">Sign Up</a>
+          </div>
+
+          <div className="signin-note">
+            <strong>Looking for your next opportunity?</strong><br />
+            Sign in to explore curated job offers, track your applications, and<br />
+            connect with recruiters across your industry.
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

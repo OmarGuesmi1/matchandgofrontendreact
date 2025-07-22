@@ -2,10 +2,10 @@
   display: flex;
   height: 100vh;
   font-family: 'Poppins', sans-serif;
-  flex-direction: row; /* côte à côte */
+  flex-direction: row;
 }
 
-/* Partie gauche - 40% */
+/* Partie gauche */
 .signin-left {
   position: relative;
   display: flex;
@@ -15,22 +15,26 @@
   padding: 40px 20px;
   transition: background-color 0.5s ease;
   background-color: #0c0c0c;
-  flex: 0 0 40%; /* largeur fixe 40% */
-  overflow-y: auto; /* scroll si besoin */
+  flex: 0 0 40%;
+  overflow-y: auto;
+  border-radius: 0 10px 10px 0;
 }
 
-/* Logo top gauche */
-.signin-logo-top {
-  position: absolute;
-  top: 20px;
-  left: 24px;
+/* Logo centré */
+.signin-logo {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo-image-large {
-  height: 40px;
+  height: 60px;
+  max-width: 200px;
+  object-fit: contain;
 }
 
-/* Images avec flèches */
+/* Image avec flèches */
 .signin-image-with-arrows {
   display: flex;
   align-items: center;
@@ -42,12 +46,11 @@
 
 .signin-image {
   max-width: 80%;
-  max-height: 300px;
+  max-height: 350px;
   object-fit: contain;
   transition: all 0.5s ease;
 }
 
-/* Boutons flèches */
 .arrow-btn {
   background: rgba(255, 255, 255, 0.3);
   border: none;
@@ -64,7 +67,6 @@
   color: #333;
 }
 
-/* Texte à gauche */
 .signin-text {
   text-align: center;
   color: #fff;
@@ -87,9 +89,9 @@
   font-weight: 400;
 }
 
-/* Partie droite fixe - 60% */
+/* Partie droite */
 .signin-right {
-  flex: 0 0 60%; /* largeur fixe 60% */
+  flex: 0 0 60%;
   max-width: 1000px;
   display: flex;
   justify-content: center;
@@ -97,10 +99,9 @@
   padding: 40px;
   background-color: #ffffff;
   height: 100vh;
-  overflow-y: auto; /* scroll si contenu dépasse */
+  overflow-y: auto;
 }
 
-/* Carte dans la partie droite */
 .signin-card {
   width: 100%;
   background-color: #ffffff;
@@ -130,28 +131,28 @@
 }
 
 .signin-form input {
-  padding: 10px 12px;        /* moins de padding */
-  font-size: 14px;           /* police un peu plus petite */
+  padding: 10px 12px;
+  font-size: 14px;
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #f9f9f9;
-  width: 400px;              /* largeur fixe réduite */
-  max-width: 90%;            /* responsive */
-  margin: 0 auto;            /* centre horizontalement */
+  width: 400px;
+  max-width: 90%;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
 .btn-signin {
   background-color: #4CAF50;
   color: white;
-  padding: 10px 16px;        /* moins de padding */
+  padding: 10px 16px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 15px;           /* police un peu plus petite */
+  font-size: 15px;
   font-weight: 500;
   transition: background 0.3s ease;
-  width: 280px;              /* même largeur que les inputs */
+  width: 280px;
   max-width: 90%;
   margin: 0 auto;
   box-sizing: border-box;
@@ -218,11 +219,11 @@
   color: #444;
 }
 
-/* Responsive - passage en colonne, partie gauche + droite 100% */
+/* Responsive */
 @media (max-width: 768px) {
   .signin-container {
-    flex-direction: column; /* passage en colonne */
-    height: auto;           /* hauteur automatique */
+    flex-direction: column;
+    height: auto;
   }
 
   .signin-left {
@@ -231,6 +232,7 @@
     height: auto;
     padding: 20px;
     overflow-y: visible;
+    border-radius: 0;
   }
 
   .signin-right {
@@ -239,11 +241,6 @@
     height: auto;
     padding: 20px;
     overflow-y: visible;
-  }
-
-  .signin-logo-top {
-    left: 20px;
-    top: 10px;
   }
 
   .signin-image {
@@ -269,4 +266,17 @@
     height: auto;
     border-radius: 16px;
   }
+}
+/* Logo centré en haut du card */
+.signin-logo-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-image-top {
+  height: 60px;
+  max-width: 180px;
+  object-fit: contain;
 }

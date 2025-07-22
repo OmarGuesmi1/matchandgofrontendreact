@@ -5,6 +5,7 @@ import Home from './pages/Home/Home.jsx';
 import { React } from 'react'
 import Footer from './components/Footer/Footer.jsx';
 import SignIn from './components/SignIn/SignIn.jsx';
+import ScrollToTopButton from './components/Scroll/ScrollToTopButton .jsx';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
 
         </Routes>
         <Footer></Footer>
+        <ScrollToTopButton />
     </div>
   );
 }
