@@ -3,40 +3,88 @@ import { useParams } from 'react-router-dom';
 import { jobs, companies } from '../../assets/assets';
 import './JobDetails.css';
 
-
 const JobDetails = () => {
   const { id } = useParams();
   const job = jobs.find(j => j.id === parseInt(id));
-  const company = companies.find(c => c.id === job.companyId);
+  const company = companies.find(c => c.id === job?.companyId);
 
-  if (!job) return <div>Job not found</div>;
+  if (!job) return <div className="job-not-found">Job not found</div>;
 
   return (
-    <div className="job-details-page">
-      <h2>{job.title}</h2>
-      <p><strong>Description:</strong> {job.description}</p>
-      <p><strong>Location:</strong> {job.location}</p>
-      <p><strong>Salary:</strong> {job.salary}</p>
-      <p><strong>Type:</strong> {job.type}</p>
-      <p><strong>Experience Level:</strong> {job.experienceLevel}</p>
-      <p><strong>Remote:</strong> {job.remote ? "Yes" : "No"}</p>
-      <p><strong>Technologies:</strong> {job.technologies.join(', ')}</p>
-      <p><strong>Degrees:</strong> {job.degrees.join(', ')}</p>
-      <p><strong>Languages:</strong> {job.languages.join(', ')}</p>
-      <p><strong>Benefits:</strong> {job.benefits.join(', ')}</p>
-      <p><strong>Sector:</strong> {job.sector}</p>
-      <p><strong>Status:</strong> {job.status}</p>
-      <p><strong>Posted At:</strong> {job.postedAt}</p>
-      <p><strong>Expires At:</strong> {job.expiresAt}</p>
+    <div className="job-details">
+      {/* Company Banner */}
+      <div className="company-banner">
+        {company?.cover && (
+          <img src={company.cover} alt="Company Cover" className="company-banner-img" />
+        )}
+        <div className="company-header-content">
+  <img src={company.logo} alt="Company Logo" className="company-logo" />
+  <div>
+    <h1 className="company-name">{company.name}</h1>
+    <p className="company-location">{company.location}</p>
+  </div>
+</div>
+      </div>
 
-      {company && (
-        <>
-          <h3>Company Info</h3>
-          <p><strong>Name:</strong> {company.name}</p>
-          {company.logo && <img src={company.logo} alt="logo" style={{ width: '100px' }} />}
-          {company.cover && <img src={company.cover} alt="cover" style={{ width: '100%' }} />}
-        </>
-      )}
+      {/* Main Job Details */}
+      <div className="job-main">
+        <div className="job-info">
+          <h2>{job.title}</h2>
+          <p className="job-meta">
+            {job.type} • {job.experienceLevel} • {job.remote ? 'Remote' : job.location}
+          </p>
+          <p className="job-salary">{job.salary}</p>
+
+          <div className="job-description">
+            <h3>Job Description</h3>
+            <p>{job.description}</p>
+          </div>
+
+          <div className="job-tags-grid">
+            <div>
+              <h4>Technologies</h4>
+              {job.technologies.map((tech, i) => (
+                <span key={i} className="job-tag">{tech}</span>
+              ))}
+            </div>
+            <div>
+              <h4>Languages</h4>
+              {job.languages.map((lang, i) => (
+                <span key={i} className="job-tag">{lang}</span>
+              ))}
+            </div>
+            <div>
+              <h4>Degrees</h4>
+              {job.degrees.map((deg, i) => (
+                <span key={i} className="job-tag">{deg}</span>
+              ))}
+            </div>
+            <div>
+              <h4>Benefits</h4>
+              {job.benefits.map((b, i) => (
+                <span key={i} className="job-tag">{b}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className="job-dates">
+            <p><strong>Sector:</strong> {job.sector}</p>
+            <p><strong>Status:</strong> {job.status}</p>
+            <p><strong>Posted:</strong> {job.postedAt}</p>
+            <p><strong>Expires:</strong> {job.expiresAt}</p>
+          </div>
+        </div>
+
+        {/* Company Profile */}
+        {company && (
+          <div className="company-profile">
+            <h3>About {company.name}</h3>
+            <p>{company.description}</p>
+            <p><strong>Category:</strong> {company.category}</p>
+            <p><strong>Open Positions:</strong> {company.jobSlots}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
