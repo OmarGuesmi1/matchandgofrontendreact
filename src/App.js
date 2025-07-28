@@ -6,7 +6,7 @@ import {  useState } from 'react'
 import Footer from './components/Footer/Footer.jsx';
 import ScrollToTopButton from './components/Scroll/ScrollToTopButton .jsx';
 import FindJob from './pages/FindJob/FindJob.jsx';
-import JobDetails from './pages/JobDetails/JobDetails.jsx';
+import JobDetails from './components/JobDetails/JobDetails.jsx';
 
 function App() {
     const [showSignIn, setShowSignIn] = useState(false);

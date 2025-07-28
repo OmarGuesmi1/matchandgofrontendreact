@@ -63,13 +63,13 @@ body {
 }
 
 
-.company-name,
+.company-namee,
 .company-location {
   text-align: center;
 }
 
 
-.company-name {
+.company-namee {
   font-size: 1.8rem;
   font-weight: 600;
   color: var(--green-dark);
@@ -195,3 +195,32 @@ body {
     height: 70px;
   }
 }
+.apply-button {
+  margin: 20px 0;
+  padding: 12px 28px;
+  background-color: #27ae60; /* Blue */
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  display: inline-block;
+}
+
+.apply-button:hover {
+  background-color: #27ae60; /* Darker blue on hover */
+}
+
+.apply-button:focus {
+  outline: 3px solid #93c5fd; /* Light blue outline for accessibility */
+  outline-offset: 2px;
+}
+
+/* Optional: Add some spacing below description for visual clarity */
+.job-description {
+  margin-bottom: 1rem;
+}
+
+/* You may adjust the color #2563eb and #1e40af to fit your color scheme */

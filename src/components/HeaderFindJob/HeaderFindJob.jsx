@@ -99,7 +99,7 @@ const navigate = useNavigate();
                   <div className="posted-time">{getDays(job.postedAt)}</div>
                 </div>
               </div>
-              {comp?.logo && <img src={comp.logo} className="company-logo" alt="logo" />}
+              {comp?.logo && <img src={comp.logo} className="companies-logo" alt="logo" />}
               <div className="job-content">
                 <div className="job-title">{job.title}</div>
                 <div className="job-meta">
@@ -121,7 +121,7 @@ const navigate = useNavigate();
             <div className="salary">{job.salary}</div>
             <div className="footer-buttons">
               <button
-                className="apply-button"
+                className="apply-buttonn"
                 onClick={() => navigate(`/FindJob/${job.id}`)}
               >
                 Details

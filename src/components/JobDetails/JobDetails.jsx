@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { jobs, companies } from '../../assets/assets';
+import ApplyJob from '../ApplyJob/ApplyJob'; // ← Importation du composant
 import './JobDetails.css';
 
 const JobDetails = () => {
   const { id } = useParams();
+  const [showApplyPanel, setShowApplyPanel] = useState(false);
+
   const job = jobs.find(j => j.id === parseInt(id));
   const company = companies.find(c => c.id === job?.companyId);
 
@@ -18,12 +21,12 @@ const JobDetails = () => {
           <img src={company.cover} alt="Company Cover" className="company-banner-img" />
         )}
         <div className="company-header-content">
-  <img src={company.logo} alt="Company Logo" className="company-logo" />
-  <div>
-    <h1 className="company-name">{company.name}</h1>
-    <p className="company-location">{company.location}</p>
-  </div>
-</div>
+          <img src={company.logo} alt="Company Logo" className="company-logo" />
+          <div>
+            <h1 className="company-namee">{company.name}</h1>
+            <p className="company-location">{company.location}</p>
+          </div>
+        </div>
       </div>
 
       {/* Main Job Details */}
@@ -40,6 +43,12 @@ const JobDetails = () => {
             <p>{job.description}</p>
           </div>
 
+          {/* Apply Button */}
+          <button className="apply-button" onClick={() => setShowApplyPanel(true)}>
+            Apply Now
+          </button>
+
+          {/* Tags */}
           <div className="job-tags-grid">
             <div>
               <h4>Technologies</h4>
@@ -85,6 +94,14 @@ const JobDetails = () => {
           </div>
         )}
       </div>
+
+      {/* Show ApplyJob panel if state is true */}
+      {showApplyPanel && (
+        <ApplyJob
+          onClose={() => setShowApplyPanel(false)}
+          jobTitle={job.title}
+        />
+      )}
     </div>
   );
 };

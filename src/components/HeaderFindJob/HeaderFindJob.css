@@ -189,7 +189,7 @@
   align-items: center;
 }
 
-.company-logo {
+.companies-logo {
   position: absolute;
   bottom: 1rem;
   left: 1rem;
@@ -202,7 +202,7 @@
   box-shadow: var(--shadow-light);
   z-index: 10;
   top: 170px; /* moves down */
-    left: 15px; /* moves left */
+    right: -15px; /* moves left */
 }
 
 .company-name {
@@ -267,7 +267,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-top: 1px solid var(--gray-200);
+  border-top: 1px solid var(--gray-border); /* utilise ta variable existante */
 }
 
 .salary {
@@ -276,8 +276,9 @@
   font-size: 1rem;
 }
 
-.apply-button {
-  background-color: var(--primary-green);
+/* Bouton "Details" */
+.apply-buttonn {
+  background-color: var(--green-primary);
   color: var(--white);
   padding: 0.5rem 1.25rem;
   border: none;
@@ -288,9 +289,32 @@
   transition: background-color 0.3s ease;
 }
 
-.apply-button:hover {
+.apply-buttonn:hover {
   background-color: var(--green-dark);
 }
+
+/* Conteneur des boutons */
+.footer-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Bouton "Enregistrer" */
+.save-button {
+  background-color: transparent;
+  border: none;
+  color: var(--green-dark);
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.save-button:hover {
+  background-color: var(--green-light);
+}
+
 
 .no-results {
   grid-column: 1 / -1;
