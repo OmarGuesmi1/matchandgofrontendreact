@@ -1,0 +1,392 @@
+/* === Root Variables === */
+:root {
+  --primary-green: #2ecc71;
+  --green-dark: #27ae60;
+  --green-light: #e6f9f1;
+
+  --gray-100: #f9fafb;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-700: #374151;
+  --gray-900: #111827;
+
+  --white: #ffffff;
+  --black: #000000;
+
+  --font-base: 'Poppins', sans-serif;
+  --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* === Layout === */
+/* === Layout === */
+.findjob-container {
+  font-family: var(--font-base);
+  padding: 4rem 1.5rem;
+  color: var(--gray-900);
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.findjob-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.3;
+  color: rgba(0, 0, 0, 0.663);
+}
+
+/* === Search Bar === */
+.search-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-light);
+  margin-bottom: 2rem;
+  background-color: var(--white);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.search-bar:hover {
+  box-shadow: var(--shadow-hover);
+  background-color: #f9fdf8;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.8px solid var(--gray-300);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background: var(--white);
+  color: var(--gray-900);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.2s ease;
+  appearance: none; /* Pour enlever styles par défaut des selects */
+  cursor: pointer;
+  position: relative;
+}
+
+/* Placeholder emoji plus léger */
+.search-input::placeholder {
+  opacity: 0.6;
+}
+
+/* Focus input et select */
+.search-input:focus {
+  outline: none;
+  border-color: var(--green-dark);
+  box-shadow: 0 0 8px rgba(46, 204, 113, 0.4);
+  background-color: #fff;
+}
+
+/* Custom arrow pour select */
+.search-input[type="select"], select.search-input {
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--gray-700) 50%),
+    linear-gradient(135deg, var(--gray-700) 50%, transparent 50%),
+    linear-gradient(to right, var(--gray-300), var(--gray-300));
+  background-position:
+    calc(100% - 20px) calc(50% - 3px),
+    calc(100% - 15px) calc(50% - 3px),
+    calc(100% - 25px) 50%;
+  background-size: 5px 5px, 5px 5px, 1px 15px;
+  background-repeat: no-repeat;
+  padding-right: 2.5rem;
+}
+
+/* Hover sur select */
+.search-input[type="select"]:hover, select.search-input:hover {
+  border-color: var(--green-dark);
+}
+
+/* Sort controls */
+.sort-controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.sort-dropdown {
+  min-width: 220px;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1.8px solid var(--gray-300);
+  font-size: 1rem;
+  background-color: var(--white);
+  color: var(--gray-900);
+  cursor: pointer;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--gray-700) 50%),
+    linear-gradient(135deg, var(--gray-700) 50%, transparent 50%),
+    linear-gradient(to right, var(--gray-300), var(--gray-300));
+  background-position:
+    calc(100% - 20px) calc(50% - 3px),
+    calc(100% - 15px) calc(50% - 3px),
+    calc(100% - 25px) 50%;
+  background-size: 5px 5px, 5px 5px, 1px 15px;
+  background-repeat: no-repeat;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sort-dropdown:focus {
+  outline: none;
+  border-color: var(--green-dark);
+  box-shadow: 0 0 8px rgba(46, 204, 113, 0.4);
+}
+
+/* === Job Cards Grid === */
+.job-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.job-card {
+  position: relative;
+  background-color: var(--white);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-light);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.job-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+.cover-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.company-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  min-height: 100px;
+  text-align: center;
+  border-bottom: 1px solid var(--gray-200);
+  position: relative;
+}
+
+.company-info-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.company-logo {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gray-200);
+  background-color: var(--white);
+  box-shadow: var(--shadow-light);
+  z-index: 10;
+  top: 170px; /* moves down */
+    left: 15px; /* moves left */
+}
+
+.company-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--gray-900);
+}
+
+.company-location,
+.posted-time {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+}
+
+.job-content {
+  padding: 1rem;
+}
+
+.job-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--gray-900);
+}
+
+.job-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--gray-700);
+}
+
+.job-type-badge {
+  padding: 0.3rem 0.75rem;
+  background-color: var(--green-light);
+  color: var(--green-dark);
+  font-weight: 500;
+  border-radius: 999px;
+}
+
+.label-active {
+  color: var(--green-dark);
+  font-weight: bold;
+}
+
+.label-expired {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.job-details-extra {
+  font-size: 0.875rem;
+  color: var(--gray-700);
+  display: grid;
+  gap: 0.4rem;
+}
+
+.job-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.salary {
+  font-weight: 700;
+  color: var(--green-dark);
+  font-size: 1rem;
+}
+
+.apply-button {
+  background-color: var(--primary-green);
+  color: var(--white);
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.apply-button:hover {
+  background-color: var(--green-dark);
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--gray-500);
+}
+
+.no-results-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.no-results-text {
+  font-size: 1rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  font-family: var(--font-base);
+}
+
+.pagination button {
+  width: 32px;
+  height: 32px;
+  background-color: var(--white);
+  border: 1.5px solid var(--gray-300);
+  color: var(--gray-700);
+  border-radius: 50%;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: var(--green-dark);
+  border-color: var(--green-dark);
+  color: var(--white);
+}
+
+.pagination button.active {
+  background-color: var(--green-dark);
+  border-color: var(--green-dark);
+  color: var(--white);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.pagination button:disabled {
+  background-color: transparent;
+  border-color: var(--gray-300);
+  color: var(--gray-300);
+  cursor: not-allowed;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .findjob-title {
+    font-size: 1.8rem;
+  }
+
+  .job-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sort-controls {
+    justify-content: center;
+    margin: 1rem 0;
+  }
+}
+.footer-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.save-button {
+  background-color: var(--gray-100);
+  color: var(--gray-800);
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.save-button:hover {
+  background-color: var(--gray-300);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}

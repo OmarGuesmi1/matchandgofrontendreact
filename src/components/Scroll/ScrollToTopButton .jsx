@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './ScrollToTopButton .css' // n'oublie pas de créer ce fichier CSS aussi
 
-const ScrollToTopButton = () => {
+const ScrollToTopButton = ({ disabled }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 200); // bouton visible après 200px de scroll
+      setIsVisible(window.scrollY > 200);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -14,11 +14,17 @@ const ScrollToTopButton = () => {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!disabled) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return isVisible ? (
-    <button className="scroll-to-top-btn" onClick={scrollToTop}>
+    <button
+      className="scroll-to-top-btn"
+      onClick={scrollToTop}
+      style={{ pointerEvents: disabled ? 'none' : 'auto', opacity: disabled ? 0.4 : 1 }}
+    >
       ⬆
     </button>
   ) : null;

@@ -20,6 +20,11 @@ body {
   background-color: var(--white);
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .navbar {
   width: 100%;
   height: 65px;
@@ -32,7 +37,7 @@ body {
   box-shadow: 0 2px 10px var(--shadow);
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1000; /* ✅ moins que le modal (9999) */
   backdrop-filter: blur(10px);
 }
 
@@ -52,7 +57,8 @@ body {
   border: 1px solid #f0f0f0;
 }
 
-.navbar-menu li {
+.navbar-menu li,
+.navbar-right-menu li {
   font-size: 14px;
   font-weight: 500;
   color: var(--text-gray);
@@ -64,13 +70,15 @@ body {
   text-transform: capitalize;
 }
 
-.navbar-menu li:hover {
+.navbar-menu li:hover,
+.navbar-right-menu li:hover {
   color: var(--primary-green-dark);
   background: linear-gradient(135deg, #f0fff8 0%, #dbfbe7 100%);
   transform: translateY(-1px);
 }
 
-.navbar-menu li.active {
+.navbar-menu li.active,
+.navbar-right-menu li.active {
   color: var(--white);
   background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
   font-weight: 600;
@@ -90,24 +98,8 @@ body {
   align-items: center;
 }
 
-.navbar-right-menu li {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-gray);
-  cursor: pointer;
-  padding: 8px 14px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-.navbar-right-menu li.active {
-  color: var(--white);
-  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
-}
-
-.navbar button {
+.navbar button,
+.signin-btn {
   padding: 10px 20px;
   background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
   color: white;
@@ -122,28 +114,45 @@ body {
   letter-spacing: 0.5px;
 }
 
-.navbar button:hover {
+.navbar button:hover,
+.signin-btn:hover {
   background: linear-gradient(135deg, #26c26a 0%, #1e9b50 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
 }
 
-.navbar button:active {
+.navbar button:active,
+.signin-btn:active {
   transform: translateY(0);
   box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
 }
 
-/* Pulse animation for dot notifications */
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
+.navbar button:focus,
+.navbar-menu li:focus,
+.signin-btn:focus {
+  outline: 2px solid var(--primary-green-dark);
+  outline-offset: 2px;
+}
+
+/* === Modale === */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 20, 20, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 95%;
 }
 
 /* Responsive Design */
@@ -158,7 +167,7 @@ body {
   }
 
   .navbar-menu {
-    display: none; /* Replace with hamburger menu if needed */
+    display: none; /* future: ajouter un menu burger */
   }
 
   .navbar-right {
@@ -190,20 +199,10 @@ body {
   }
 }
 
-/* Glassmorphism enhancement */
+/* Glassmorphism fallback */
 @supports (backdrop-filter: blur(10px)) {
   .navbar {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
   }
-}
-/* Exemple rapide */
-.signin-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #2ecc71;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 500;
 }

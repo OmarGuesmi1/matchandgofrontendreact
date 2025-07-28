@@ -7,6 +7,10 @@
   position: relative;
 }
 
+/* Supprimé ou désactivé car le titre est maintenant dans le cadre */
+
+
+
 
 .job-section-image-container {
   position: relative;
@@ -76,3 +80,68 @@
   background-color: #000000;
   color: #ffffff;
 }
+@media (max-width: 1200px) {
+  .job-text-overlay {
+    top: 25px;
+    right: 9px;
+    padding: 6px 10px;
+  }
+  .job-text-overlay h1 {
+    font-size: 22px;
+  }
+
+  .job-text-overlay p {
+    font-size: 14.5px;
+  }
+}
+
+@media (max-width: 992px) {
+  .job-text-overlay h1 {
+    font-size: 20px;
+  }
+
+  .job-text-overlay p {
+    font-size: 13.5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .job-text-overlay h1 {
+    font-size: 18px;
+  }
+
+  .job-text-overlay p {
+    font-size: 12.5px;
+  }
+
+  .find-job-button {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .job-text-overlay {
+    top: 10px;
+    right: 9px;
+    max-width: 200px;
+    padding: 6px 10px;
+  }
+
+  .job-text-overlay h1 {
+    font-size: 9px;         /* Taille plus petite mais lisible */
+    line-height: 1.1;
+  }
+
+  .job-text-overlay p {
+    font-size: 7px;       /* Diminue sans couper */
+    line-height: 1.0;
+  }
+
+  .find-job-button {
+    font-size: 6px;
+    padding: 6px 12px;
+    
+    
+  }
+}
+

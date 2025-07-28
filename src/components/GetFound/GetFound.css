@@ -1,0 +1,158 @@
+/* Conteneur principal avec image placée en fond via balise <img> */
+.get-found-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: #000000a4;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
+
+.background-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;         /* Laisse la largeur s'adapter */
+  max-width: 1200px;   /* Largeur max */
+  max-height: 600px;   /* Limite la hauteur verticale */
+  height: auto;        /* Ajuste la hauteur automatiquement */
+  object-fit: contain;
+  z-index: -1;
+  opacity: 0.8;
+}
+
+
+
+
+/* Contenu centré avec fond sombre translucide */
+.content-wrapper {
+  padding: 3rem;
+  border-radius: 16px;
+  max-width: 400px;
+  width: 100%;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  /* Aligner à gauche */
+   margin-left: -380px; 
+}
+
+
+/* Titre principal */
+.main-title {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+  color: #000000a4;
+}
+
+/* Description */
+.description {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.description .subtitle {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Carte de statut */
+.status-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #000000a4;
+
+  max-width: 320px;    /* Réduire la largeur max */
+  margin-left: -20px;  /* Décaler un peu vers la gauche */
+}
+
+
+/* Titre statut */
+.status-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Options radio */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.radio-option input[type="radio"] {
+  margin-top: 5px;
+  transform: scale(1.2);
+}
+
+.status-label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.status-label.open-to-offers {
+  color: #0d6efd;
+}
+
+.status-label.not-available {
+  color: #dc3545;
+}
+
+/* Texte sous chaque label */
+.status-description {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Messages selon le statut */
+.feedback-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.not-available-message {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+
+.available-message {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+}
+
+.open-to-offers-message {
+  background-color: #cff4fc;
+  color: #055160;
+  border: 1px solid #b6effb;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .content-wrapper {
+    padding: 2rem;
+  }
+
+  .main-title {
+    font-size: 2.2rem;
+  }
+}
