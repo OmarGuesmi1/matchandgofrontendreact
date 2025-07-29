@@ -14,8 +14,8 @@ const GetFound = () => {
       {/* ✅ Image de fond */}
       <img src={assets.GetFound} alt="Background" className="background-image" />
 
-      <div className="content-wrapper">
-        <div className="main-content">
+      <div className="content-wrapperr">
+        <div className="main-contentt">
           <h1 className="main-title">Get Found!</h1>
 
           <div className="description">

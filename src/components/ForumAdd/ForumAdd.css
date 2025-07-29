@@ -1,0 +1,70 @@
+.forum-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+  max-width: 600px;
+  margin: 1.5rem auto;
+  border: 1px solid #e0e0e0;
+}
+
+.forum-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.forum-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.forum-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  background-color: #f4f4f4;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.forum-input:focus {
+  outline: none;
+  border-color: var(--primary-green, #2ecc71);
+  background-color: #fff;
+}
+
+.forum-bottom {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 0.75rem;
+  border-top: 1px solid #eee;
+}
+
+.forum-option {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #555;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.forum-option:hover {
+  color: var(--primary-green, #2ecc71);
+}
+
+.forum-icon {
+  font-size: 1.1rem;
+}
+
+.photo { color: #70b5f9; }
+.video { color: #7fc15e; }
+.doc { color: #e7a33e; }
+.article { color: #fc9295; }

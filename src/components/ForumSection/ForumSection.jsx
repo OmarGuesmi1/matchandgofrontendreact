@@ -14,46 +14,40 @@ const ForumSection = () => {
   };
 
   return (
-    <section className="forum-section">
-      <div className="forum-container">
-        <img src={assets.quote} alt="quote" className="quote-image" />
-            <header className="forum-header">
-        <img src={assets.matchgorforum} alt="Match&Go Forum Logo" className="forum-brand"
-        />
-        <h2 className="forum-section-title">Top Posts</h2>
-      </header>
+    <section className="fs-forum-section">
+  <div className="fs-forum-container">
+    <img src={assets.quote} alt="quote" className="fs-quote-image" />
+    <header className="fs-forum-header">
+      <img src={assets.matchgorforum} alt="Forum Logo" className="fs-forum-brand" />
+      <h2 className="fs-forum-title">Top Posts</h2>
+    </header>
 
+    <button className="fs-scroll-btn left" onClick={scrollLeft}>‹</button>
+    <button className="fs-scroll-btn right" onClick={scrollRight}>›</button>
 
-        {/* Flèches */}
-        <button className="scroll-btn left" onClick={scrollLeft}>‹</button>
-        <button className="scroll-btn right" onClick={scrollRight}>›</button>
-
-        <div className="forum-posts-wrapper" ref={containerRef}>
-          <div className="forum-posts-container">
-            {forumPosts.map((post) => (
-              <article className="forum-post-card" key={post.id}>
-                <div className="forum-user-info">
-                  <img
-                    src={post.userPhoto}
-                    alt={`${post.firstName} ${post.lastName}`}
-                    className="forum-user-photo"
-                  />
-                  <div>
-                    <h4 className="forum-user-name">{post.firstName} {post.lastName}</h4>
-                    <p className="forum-user-role">{post.role}</p>
-                  </div>
-                </div>
-                <p className="forum-post-content">"{post.content}"</p>
-                <div className="forum-post-reactions">
-                  <span>👍 {post.likes}</span>
-                  <span>💬 {post.comments}</span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
+    <div className="fs-posts-wrapper" ref={containerRef}>
+      <div className="fs-posts-container">
+        {forumPosts.map((post) => (
+          <article className="fs-post-card" key={post.id}>
+            <div className="fs-user-info">
+              <img src={post.userPhoto} alt={`${post.firstName} ${post.lastName}`} className="fs-user-photo" />
+              <div>
+                <h4 className="fs-user-name">{post.firstName} {post.lastName}</h4>
+                <p className="fs-user-role">{post.role}</p>
+              </div>
+            </div>
+            <p className="fs-post-content">"{post.content}"</p>
+            <div className="fs-post-reactions">
+              <span>👍 {post.likes}</span>
+              <span>💬 {post.comments}</span>
+            </div>
+          </article>
+        ))}
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+
   );
 };
 

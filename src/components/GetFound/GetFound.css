@@ -29,10 +29,10 @@
 
 
 /* Contenu centré avec fond sombre translucide */
-.content-wrapper {
+.content-wrapperr {
   padding: 3rem;
   border-radius: 16px;
-  max-width: 400px;
+  max-width: 500px;
   width: 100%;
   z-index: 1;
 

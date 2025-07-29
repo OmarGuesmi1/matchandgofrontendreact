@@ -1,116 +1,265 @@
-.apply-overlay {
+:root {
+  --primary-green: #2ecc71;
+  --primary-green-dark: #27ae60;
+  --light-bg: #f9fefb;
+  --white: #ffffff;
+  --gray-text: #555;
+  --border-gray: #e0e0e0;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Overlay */
+.apply-job-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(34, 34, 34, 0.6);
   display: flex;
-  justify-content: flex-end;  /* Le panneau vient de droite */
-  align-items: center;        /* Centrage vertical */
-  z-index: 9999;
-  animation: fadeIn 0.3s ease;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
+/* Panel */
+.apply-job-panel {
+    position: relative; /* nécessaire pour positionner le bouton à l'intérieur */
 
-.apply-panel {
-  background-color: #fefefe;
-  width: 500px;
-  height: 100%;
-  padding: 32px;
+  background: var(--white);
+  width: 95%;
+  max-width: 850px;
+  max-height: 95vh;
   overflow-y: auto;
-  box-shadow: -2px 0 20px rgba(0, 0, 0, 0.1);
-  border-radius: 16px 0 0 16px;
-  animation: slideIn 0.3s ease forwards;
-  position: relative;
-}
-
-.close-btn {
-  position: absolute;
-  top: 18px;
-  right: 24px;
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: #555;
-  cursor: pointer;
-}
-
-.form-title {
-  font-size: 1.4rem;
-  margin-bottom: 24px;
-  font-weight: bold;
-}
-
-.form-title span {
-  color: #4CAF50;
-}
-
-.apply-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.form-group input,
-.form-group textarea {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-
-.form-group textarea {
-  resize: vertical;
-}
-
-.submit-btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.submit-btn:hover {
-  background-color: #3e8e41;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px var(--shadow);
+  animation: slideIn 0.3s ease-out;
+  padding: 32px;
 }
 
 @keyframes slideIn {
   from {
-    transform: translateX(100%);
+    transform: translateY(20px);
+    opacity: 0;
   }
   to {
-    transform: translateX(0%);
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    background-color: rgba(0, 0, 0, 0);
+/* Header */
+.apply-job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-gray);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+
+.apply-job-header h2 {
+  font-size: 24px;
+  color: var(--primary-green-dark);
+  font-weight: 600;
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--light-bg);
+  border: none;
+  font-size: 24px;
+  color: var(--gray-text);
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn:hover {
+  background: var(--primary-green);
+  color: white;
+}
+
+
+/* Sections */
+.form-section {
+  margin-bottom: 32px;
+}
+
+.form-section h3 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: var(--primary-green-dark);
+  font-weight: 500;
+  border-left: 4px solid var(--primary-green);
+  padding-left: 12px;
+}
+
+/* Form Rows */
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--gray-text);
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid var(--border-gray);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-green);
+}
+
+/* File Upload */
+.file-upload {
+  position: relative;
+  cursor: pointer;
+}
+
+.file-upload input[type="file"] {
+  opacity: 0;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.file-upload-placeholder {
+  border: 2px dashed var(--border-gray);
+  padding: 14px;
+  border-radius: 8px;
+  text-align: center;
+  color: var(--gray-text);
+  font-size: 14px;
+  background-color: var(--light-bg);
+}
+
+/* Terms */
+.terms-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--gray-text);
+}
+
+.checkbox-container input {
+  accent-color: var(--primary-green);
+}
+
+.terms-text a {
+  color: var(--primary-green-dark);
+  text-decoration: none;
+}
+
+.terms-text a:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-submit,
+.btn-cancel {
+  padding: 12px 20px;
+  border: none;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-submit {
+  background-color: var(--primary-green-dark);
+  color: var(--white);
+}
+
+.btn-submit:hover {
+  background-color: var(--primary-green);
+}
+
+.btn-cancel {
+  background-color: #f5f5f5;
+  color: #444;
+}
+
+.btn-cancel:hover {
+  background-color: #e0e0e0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
   }
-  to {
-    background-color: rgba(0, 0, 0, 0.5);
+
+  .apply-job-panel {
+    padding: 24px 16px;
   }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* Scrollbar personnalisée */
+.apply-job-panel::-webkit-scrollbar {
+  width: 10px;
+}
+
+.apply-job-panel::-webkit-scrollbar-track {
+  background: var(--light-bg);
+  border-radius: 8px;
+}
+
+.apply-job-panel::-webkit-scrollbar-thumb {
+  background-color: var(--primary-green);
+  border-radius: 8px;
+  border: 2px solid var(--light-bg);
+}
+
+.apply-job-panel::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-green-dark);
+}
+
+/* Firefox (scrollbar minimaliste) */
+.apply-job-panel {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-green) var(--light-bg);
 }

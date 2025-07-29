@@ -1,107 +1,145 @@
+// Remplacer tous les champs obsolètes par les bons noms de propriétés
+// 🔁 Exemple : job.jobTitle ➜ job.title
+
 import React, { useState } from 'react';
+import './JobDetails.css';
 import { useParams } from 'react-router-dom';
 import { jobs, companies } from '../../assets/assets';
-import ApplyJob from '../ApplyJob/ApplyJob'; // ← Importation du composant
-import './JobDetails.css';
+import ApplyJob from '../ApplyJob/ApplyJob.jsx';
 
 const JobDetails = () => {
   const { id } = useParams();
-  const [showApplyPanel, setShowApplyPanel] = useState(false);
-
-  const job = jobs.find(j => j.id === parseInt(id));
+  const jobId = parseInt(id);
+  const job = jobs.find(j => j.id === jobId);
   const company = companies.find(c => c.id === job?.companyId);
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
 
-  if (!job) return <div className="job-not-found">Job not found</div>;
+  if (!job || !company) return <p>Job not found.</p>;
+
+  const handleApplyNow = () => setShowApplicationForm(true);
+  const handleCloseApplication = () => setShowApplicationForm(false);
 
   return (
-    <div className="job-details">
-      {/* Company Banner */}
-      <div className="company-banner">
-        {company?.cover && (
-          <img src={company.cover} alt="Company Cover" className="company-banner-img" />
-        )}
-        <div className="company-header-content">
-          <img src={company.logo} alt="Company Logo" className="company-logo" />
-          <div>
-            <h1 className="company-namee">{company.name}</h1>
-            <p className="company-location">{company.location}</p>
+    <div className="job-details-container">
+      <img src={company.cover} alt={`${company.name} cover`} />
+
+      <div className="job-details-content">
+        {/* Sidebar */}
+        <div className="sidebar">
+          <div className="company-header">
+            <img src={company.logo} alt={`${company.name} logo`} />
+            <h2>{company.name}</h2>
+            <div className="company-info">
+              <p>{company.location}</p>
+              <p>{company.category}</p>
+            </div>
+          </div>
+
+          <div className="job-summary-card">
+            <h3>Job Summary</h3>
+            <div className="summary-item">
+              <span className="summary-label">Contract</span>
+              <span className="summary-value">{job.type}</span>
+            </div>
+            <div className="summary-item">
+              <span className="summary-label">Location</span>
+              <span className="summary-value">
+                {job.location} {job.remote && "(Remote)"}
+              </span>
+            </div>
+            <div className="summary-item">
+              <span className="summary-label">Salary</span>
+              <span className="summary-value">
+                {job.salary ? `${job.salary}/month` : 'N/A'}
+              </span>
+            </div>
+            <div className="summary-item">
+              <span className="summary-label">Experience</span>
+              <span className="summary-value">{job.experienceLevel}</span>
+            </div>
+            <div className="summary-item">
+              <span className="summary-label">Education</span>
+              <span className="summary-value">{job.degrees?.join(', ')}</span>
+            </div>
+            <div className="summary-item">
+              <span className="summary-label">Posted</span>
+              <span className="summary-value">
+                {new Date(job.postedAt).toDateString()}
+              </span>
+            </div>
+            <div className="summary-item">
+              <span className="summary-label">Languages</span>
+              <span className="summary-value">{job.languages?.join(', ')}</span>
+            </div>
+            <div className="summary-item">
+              <span className="summary-label">Sector</span>
+              <span className="summary-value">{job.sector}</span>
+            </div>
+          </div>
+
+          <div className="action-buttons">
+            <button onClick={handleApplyNow}>Apply Now</button>
+            <button>Save Job</button>
           </div>
         </div>
-      </div>
 
-      {/* Main Job Details */}
-      <div className="job-main">
-        <div className="job-info">
-          <h2>{job.title}</h2>
-          <p className="job-meta">
-            {job.type} • {job.experienceLevel} • {job.remote ? 'Remote' : job.location}
-          </p>
-          <p className="job-salary">{job.salary}</p>
+        {/* Main Content */}
+        <div className="main-content">
+          <h1>{job.title}</h1>
 
-          <div className="job-description">
+          <section>
             <h3>Job Description</h3>
-            <p>{job.description}</p>
-          </div>
+            <p>{job.description || 'No description available.'}</p>
+          </section>
 
-          {/* Apply Button */}
-          <button className="apply-button" onClick={() => setShowApplyPanel(true)}>
-            Apply Now
-          </button>
+          <section>
+            <h3>Technologies</h3>
+            {job.technologies?.length ? (
+              <div className="skills-container">
+                {job.technologies.map((tech, index) => (
+                  <span key={index} className="skill-tag">{tech}</span>
+                ))}
+              </div>
+            ) : (
+              <p className="no-data">No technologies listed.</p>
+            )}
+          </section>
 
-          {/* Tags */}
-          <div className="job-tags-grid">
-            <div>
-              <h4>Technologies</h4>
-              {job.technologies.map((tech, i) => (
-                <span key={i} className="job-tag">{tech}</span>
-              ))}
-            </div>
-            <div>
-              <h4>Languages</h4>
-              {job.languages.map((lang, i) => (
-                <span key={i} className="job-tag">{lang}</span>
-              ))}
-            </div>
-            <div>
-              <h4>Degrees</h4>
-              {job.degrees.map((deg, i) => (
-                <span key={i} className="job-tag">{deg}</span>
-              ))}
-            </div>
-            <div>
-              <h4>Benefits</h4>
-              {job.benefits.map((b, i) => (
-                <span key={i} className="job-tag">{b}</span>
-              ))}
-            </div>
-          </div>
+          <section>
+            <h3>Benefits</h3>
+            {job.benefits?.length ? (
+              <ul>
+                {job.benefits.map((b, index) => (
+                  <li key={index}>{b}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="no-data">No benefits listed.</p>
+            )}
+          </section>
 
-          <div className="job-dates">
-            <p><strong>Sector:</strong> {job.sector}</p>
-            <p><strong>Status:</strong> {job.status}</p>
-            <p><strong>Posted:</strong> {job.postedAt}</p>
-            <p><strong>Expires:</strong> {job.expiresAt}</p>
-          </div>
+          <section>
+            <h3>Keywords</h3>
+            {job.keywords?.length ? (
+              <div className="skills-container">
+                {job.keywords.map((kw, index) => (
+                  <span key={index} className="skill-tag">{kw}</span>
+                ))}
+              </div>
+            ) : (
+              <p className="no-data">No keywords listed.</p>
+            )}
+          </section>
         </div>
-
-        {/* Company Profile */}
-        {company && (
-          <div className="company-profile">
-            <h3>About {company.name}</h3>
-            <p>{company.description}</p>
-            <p><strong>Category:</strong> {company.category}</p>
-            <p><strong>Open Positions:</strong> {company.jobSlots}</p>
-          </div>
-        )}
       </div>
 
-      {/* Show ApplyJob panel if state is true */}
-      {showApplyPanel && (
-        <ApplyJob
-          onClose={() => setShowApplyPanel(false)}
-          jobTitle={job.title}
-        />
-      )}
+      {/* Application Form Modal */}
+      <ApplyJob
+        isOpen={showApplicationForm}
+        onClose={handleCloseApplication}
+        job={job}
+        company={company}
+      />
     </div>
   );
 };

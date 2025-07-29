@@ -83,6 +83,99 @@ export const assets = {
     "Engineering / Construction",
     "Finance / Banking"
   ];
+export const posts = [
+  {
+    id: 1,
+    authorType: 'company',
+    name: 'Sofrecom Tunisia',
+    avatar: sofrecomLogo,
+    date: '2h ago',
+    content: '🚀 We are hiring React Developers in Tunis! Apply now and join our tech team.',
+    image: '/uploads/sofrecom-hiring.png',
+    video: null,
+    reactions: 122,
+    comments: 18,
+  },
+  {
+    id: 2,
+    authorType: 'candidate',
+    name: 'Omar Guesmi',
+    avatar: leoPhoto,
+    date: '1 day ago',
+    content: '🎉 Proud to launch my new full-stack app with React and Node.js!',
+    image: null,
+    video: '/uploads/omar-demo.mp4',
+    reactions: 88,
+    comments: 27,
+  },
+   {
+    id: 3,
+    authorType: 'candidate',
+    name: 'Yosr Mrabet',
+    avatar: claraPhoto,
+    date: '2 days ago',
+    content: '💼 Happy to announce that I just completed my internship in Frontend Development at Telnet Group! Learned a lot about React, UX and teamwork. 🙌',
+    image: '/uploads/yosr-internship.jpg',
+    video: null,
+    reactions: 134,
+    comments: 24,
+    commentsList: [
+    { id: 1, author: 'Ahmed B.', text: 'Bravo 👏' },
+    { id: 2, author: 'Nour L.', text: 'Bonne chance !' }
+]
+
+  },
+  {
+    id: 4,
+    authorType: 'company',
+    name: 'Glovo',
+    avatar: glovoLogo,
+    date: '3 days ago',
+    content: 'We just hosted a successful hackathon 🧠! Thanks to all participants.',
+    image: '/uploads/hackathon-vermeg.jpg',
+    video: null,
+    reactions: 210,
+    comments: 36,
+  },
+  {
+    id: 5,
+    authorType: 'candidate',
+    name: 'Amina Saidi',
+    avatar: fatimaPhoto,
+    date: '4 days ago',
+    content: 'Just finished a certification in UI/UX Design 🎨. Time to create beautiful interfaces!',
+    image: '/uploads/uiux-cert.png',
+    video: null,
+    reactions: 63,
+    comments: 12,
+  },
+  {
+    id: 6,
+    authorType: 'company',
+    name: 'Ooredoo Tech',
+    avatar: ooredooLogo,
+    date: '5 days ago',
+    content: '💡 Meet our new interns at Ooredoo Innovation Lab. The future looks bright!',
+    image: '/uploads/interns-ooredoo.jpg',
+    video: null,
+    reactions: 173,
+    comments: 31,
+  },
+  {
+    id: 7,
+    authorType: 'candidate',
+    name: 'Khalil Ben Amor',
+    avatar: leoPhoto,
+    date: '6 days ago',
+    content: 'Check out my portfolio site 🚀 – built with TailwindCSS & React.',
+    image: '/uploads/portfolio-khalil.png',
+    video: null,
+    reactions: 94,
+    comments: 15,
+  },
+ 
+];
+
 
 export const forumPosts = [
   {

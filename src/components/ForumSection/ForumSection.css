@@ -1,19 +1,30 @@
+:root {
+  --primary-green: #27ae60;
+  --primary-green-light: #eafaf1;
+  --dark-text: #1c1c1c;
+  --light-text: #555;
+  --card-bg: #ffffff;
+  --border-color: #e0e0e0;
+  --shadow: rgba(0, 0, 0, 0.06);
+}
+
 /* --- Section principale --- */
-.forum-section {
+.fs-forum-section {
   padding: 4rem 1rem;
   background-color: #f9fafb;
   position: relative;
 }
 
-.forum-container {
+/* --- Conteneur --- */
+.fs-forum-container {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
   padding: 1rem;
 }
 
-/* --- Image quote modifiée --- */
-.quote-image {
+/* --- Image décorative quote --- */
+.fs-quote-image {
   position: absolute;
   top: -48px;
   right: -70px;
@@ -23,33 +34,28 @@
   z-index: 0;
 }
 
-/* --- En-tête forum --- */
-.forum-header {
+/* --- En-tête --- */
+.fs-forum-header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.forum-brand {
-  width: 300px; /* Ajuste en fonction de la taille souhaitée */
+.fs-forum-brand {
+  width: 300px;
   height: auto;
   display: block;
-  margin-bottom: 0.5rem;
-  object-fit: contain; /* pour que l'image garde ses proportions */
+  margin: 0 auto 0.5rem;
+  object-fit: contain;
 }
 
-
-
-.forum-section-title {
+.fs-forum-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #222;
-  text-align: center;
-  position: relative;
+  color: var(--dark-text);
   margin-bottom: 1rem;
 }
 
-/* Ligne décorative sous le titre */
-.forum-section-title::after {
+.fs-forum-title::after {
   content: '';
   display: block;
   width: 60px;
@@ -59,18 +65,17 @@
   border-radius: 2px;
 }
 
-/* --- Flèches de défilement --- */
-.scroll-btn {
+/* --- Flèches défilement --- */
+.fs-scroll-btn {
   position: absolute;
-  top: 50%;
+  top: 60%;
   transform: translateY(-50%);
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   background-color: #ffffff;
-  color: #000000;
-  border: 2px solid #000000;
+  color: var(--primary-green);
+  border: 2px solid var(--primary-green);
   border-radius: 50%;
   width: 48px;
-  top: 60%;
   height: 48px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
@@ -78,22 +83,22 @@
   transition: all 0.3s ease;
 }
 
-.scroll-btn:hover {
-  background-color: #000000;
+.fs-scroll-btn:hover {
+  background-color: var(--primary-green);
   color: #ffffff;
   transform: translateY(-50%) scale(1.1);
 }
 
-.scroll-btn.left {
+.fs-scroll-btn.left {
   left: -60px;
 }
 
-.scroll-btn.right {
+.fs-scroll-btn.right {
   right: -60px;
 }
 
-/* --- Scroll wrapper --- */
-.forum-posts-wrapper {
+/* --- Scroll horizontal --- */
+.fs-posts-wrapper {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
@@ -101,12 +106,11 @@
   padding: 1rem 0;
 }
 
-.forum-posts-wrapper::-webkit-scrollbar {
+.fs-posts-wrapper::-webkit-scrollbar {
   display: none;
 }
 
-/* --- Container de posts --- */
-.forum-posts-container {
+.fs-posts-container {
   display: flex;
   gap: 24px;
   transition: transform 0.5s ease-in-out;
@@ -114,124 +118,107 @@
 }
 
 /* --- Carte de post --- */
-.forum-post-card {
-  flex: 0 0 calc(100% / 3 - 16px);
+.fs-post-card {
+  flex: 0 0 calc(100% / 3 - 24px);
   scroll-snap-align: start;
-  background: #ffffff;
-  border-radius: 16px;
+  background: var(--card-bg);
+  border-radius: 20px;
   padding: 24px;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 10px var(--shadow);
   display: flex;
   flex-direction: column;
   gap: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fs-post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(39, 174, 96, 0.2);
 }
 
 /* --- Infos utilisateur --- */
-.forum-user-info {
+.fs-user-info {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.forum-user-photo {
+.fs-user-photo {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #27ae60;
+  border: 2px solid var(--primary-green);
 }
 
-.forum-user-name {
-  font-size: 1rem;
+.fs-user-name {
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #17252a;
+  color: var(--dark-text);
   margin: 0;
 }
 
-.forum-user-role {
+.fs-user-role {
   font-size: 0.75rem;
-  color: #ffffff;
-  background-color: #27ae60;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-weight: 500;
+  color: var(--primary-green);
+  background-color: var(--primary-green-light);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
   margin-top: 4px;
   display: inline-block;
 }
 
-/* --- Contenu du post --- */
-.forum-post-content {
+/* --- Contenu --- */
+.fs-post-content {
   font-size: 1rem;
-  color: #333;
-  padding-left: 12px;
-  border-left: 3px solid #27ae60;
+  color: #34495e;
+  padding-left: 14px;
+  border-left: 3px solid var(--primary-green);
   margin: 0;
   line-height: 1.6;
-  font-style: normal;
+  font-style: italic;
 }
 
 /* --- Réactions --- */
-.forum-post-reactions {
+.fs-post-reactions {
   display: flex;
   justify-content: flex-start;
   gap: 20px;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--light-text);
   border-top: 1px solid #eee;
   padding-top: 12px;
   margin-top: auto;
 }
 
-/* --- Pagination --- */
-.pagination-dots {
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
-  gap: 10px;
-}
-
-.pagination-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #ccc;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.pagination-dot:hover {
-  transform: scale(1.2);
-  background: #3aafa9;
-}
-
-.pagination-dot.active {
-  background: #2b7a78;
-  width: 14px;
-  height: 14px;
-}
-
 /* --- Responsive --- */
-@media (max-width: 1024px) {
-  .forum-post-card {
-    flex: 0 0 calc(100% / 2 - 16px);
+@media (max-width: 1200px) {
+  .fs-post-card {
+    flex: 0 0 calc(50% - 16px);
   }
 }
 
 @media (max-width: 768px) {
-  .forum-post-card {
+  .fs-post-card {
     flex: 0 0 100%;
+    padding: 20px;
   }
 
-  .forum-header {
-    margin-bottom: 1rem;
-  }
-
-  .scroll-btn.left {
+  .fs-scroll-btn.left {
     left: 5px;
   }
 
-  .scroll-btn.right {
+  .fs-scroll-btn.right {
     right: 5px;
+  }
+
+  .fs-forum-brand {
+    width: 220px;
+  }
+
+  .fs-forum-title {
+    font-size: 2rem;
   }
 }

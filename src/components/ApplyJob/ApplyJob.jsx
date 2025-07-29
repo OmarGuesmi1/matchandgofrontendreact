@@ -1,93 +1,238 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './ApplyJob.css';
 
-const ApplyJob = ({ onClose, jobTitle }) => {
+import { useState } from 'react';
+
+const ApplyJob = ({ isOpen, onClose, job, company }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
+    telephone: '',
     email: '',
-    phone: '',
-    currentPosition: '',
-    website: '',
-    linkedin: '',
+    currentLocation: '',
+    dateOfBirth: '',
     resume: null,
-    photo: null,
-    coverLetter: '',
-    message: '',
+    linkedinUrl: '',
+    githubUrl: '',
+    motivationLetter: null,
+    agreeToTerms: false
   });
 
-  const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
+  const handleInputChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'file' ? files[0] : value
+      [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Submitted:', formData);
-    alert('Your application has been submitted!');
+    
+    if (!formData.agreeToTerms) {
+      alert('Please agree to the terms of service');
+      return;
+    }
+
+    console.log('Application submitted:', formData);
+    // Handle form submission here
+    alert('Application submitted successfully!');
     onClose();
   };
 
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  if (!isOpen) return null;
+
   return (
-    <div className="apply-overlay">
-      <div className="apply-panel">
-        <button className="close-btn" onClick={onClose}>×</button>
-        <h2 className="form-title">Apply for: <span>{jobTitle}</span></h2>
-        <form className="apply-form" onSubmit={handleSubmit}>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>First Name *</label>
-              <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
-            </div>
-            <div className="form-group">
-              <label>Last Name *</label>
-              <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
-            </div>
-            <div className="form-group">
-              <label>Email *</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-            </div>
-            <div className="form-group">
-              <label>Phone</label>
-              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label>Current Position</label>
-              <input type="text" name="currentPosition" value={formData.currentPosition} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label>Website</label>
-              <input type="url" name="website" value={formData.website} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label>LinkedIn</label>
-              <input type="url" name="linkedin" value={formData.linkedin} onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label>Resume (PDF) *</label>
-              <input type="file" name="resume" accept=".pdf" onChange={handleChange} required />
-            </div>
-            <div className="form-group">
-              <label>Photo</label>
-              <input type="file" name="photo" accept="image/*" onChange={handleChange} />
-            </div>
-          </div>
+    <div className="apply-job-overlay" onClick={handleBackdropClick}>
+      <div className={`apply-job-panel ${isOpen ? 'open' : ''}`}>
+        <div className="apply-job-header">
+          <h2>Apply for {job?.jobTitle}</h2>
+          <button className="close-btn" onClick={onClose}>
+            ×
+          </button>
+        </div>
 
-          <div className="form-group">
-            <label>Cover Letter</label>
-            <textarea name="coverLetter" rows="4" value={formData.coverLetter} onChange={handleChange} />
-          </div>
+        <div className="apply-job-content">
+          <form onSubmit={handleSubmit}>
+            {/* Personal Information */}
+            <section className="form-section">
+              <h3>Personal Information</h3>
+              
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="firstName">First Name *</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="lastName">Last Name *</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
 
-          <div className="form-group">
-            <label>Additional Message</label>
-            <textarea name="message" rows="3" value={formData.message} onChange={handleChange} />
-          </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="telephone">Telephone Number *</label>
+                  <input
+                    type="tel"
+                    id="telephone"
+                    name="telephone"
+                    value={formData.telephone}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email">Email Address *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
 
-          <button type="submit" className="submit-btn">Submit Application</button>
-        </form>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="currentLocation">Current Living Location *</label>
+                  <input
+                    type="text"
+                    id="currentLocation"
+                    name="currentLocation"
+                    value={formData.currentLocation}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="dateOfBirth">Date of Birth *</label>
+                  <input
+                    type="date"
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    value={formData.dateOfBirth}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* Your Profile */}
+            <section className="form-section">
+              <h3>Your Profile</h3>
+              
+              <div className="form-group">
+                <label htmlFor="resume">Upload Your Resume *</label>
+                <div className="file-upload">
+                  <input
+                    type="file"
+                    id="resume"
+                    name="resume"
+                    onChange={handleInputChange}
+                    accept=".pdf,.doc,.docx"
+                    required
+                  />
+                  <div className="file-upload-placeholder">
+                    {formData.resume ? formData.resume.name : 'Choose file or drag and drop'}
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="linkedinUrl">LinkedIn Profile URL</label>
+                  <input
+                    type="url"
+                    id="linkedinUrl"
+                    name="linkedinUrl"
+                    value={formData.linkedinUrl}
+                    onChange={handleInputChange}
+                    placeholder="https://linkedin.com/in/yourprofile"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="githubUrl">GitHub Profile URL</label>
+                  <input
+                    type="url"
+                    id="githubUrl"
+                    name="githubUrl"
+                    value={formData.githubUrl}
+                    onChange={handleInputChange}
+                    placeholder="https://github.com/yourusername"
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="motivationLetter">Letter of Motivation</label>
+                <div className="file-upload">
+                  <input
+                    type="file"
+                    id="motivationLetter"
+                    name="motivationLetter"
+                    onChange={handleInputChange}
+                    accept=".pdf,.doc,.docx"
+                  />
+                  <div className="file-upload-placeholder">
+                    {formData.motivationLetter ? formData.motivationLetter.name : 'Choose file or drag and drop (Optional)'}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Terms of Service */}
+            <section className="form-section">
+              <div className="terms-section">
+                <label className="checkbox-container">
+                  <input
+                    type="checkbox"
+                    name="agreeToTerms"
+                    checked={formData.agreeToTerms}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <span className="checkmark"></span>
+                  <span className="terms-text">
+                    I agree to the <a href="#" target="_blank">Terms of Service</a> and consent to the processing of my personal data for recruitment purposes.
+                  </span>
+                </label>
+              </div>
+            </section>
+
+            {/* Submit Button */}
+            <div className="form-actions">
+              <button type="button" className="btn-cancel" onClick={onClose}>
+                Cancel
+              </button>
+              <button type="submit" className="btn-submit">
+                Submit Application
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

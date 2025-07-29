@@ -1,14 +1,13 @@
 :root {
   --primary-green: #2ecc71;
   --primary-green-dark: #27ae60;
-  --light-green-bg: #ecfdf5;
+  --light-green: #f0fff8;
   --white: #ffffff;
-  --text-gray: #555;
-  --border-gray: #e8e8e8;
+  --gray-text: #555;
+  --border: #e8e8e8;
   --shadow: rgba(0, 0, 0, 0.04);
 }
 
-/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -17,51 +16,49 @@
 
 body {
   font-family: "Inter", "Segoe UI", sans-serif;
-  background-color: var(--white);
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
 }
 
 .navbar {
   width: 100%;
-  height: 65px;
-  background: linear-gradient(135deg, #ffffff 0%, #f9fdfb 100%);
+  height: 80px; /* Increased from 65px to accommodate bigger logo */
+  background: linear-gradient(135deg, var(--white) 0%, #f9fdfb 100%);
   padding: 0 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--border-gray);
+  border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 10px var(--shadow);
   position: sticky;
   top: 0;
-  z-index: 1000; /* ✅ moins que le modal (9999) */
+  z-index: 1000;
   backdrop-filter: blur(10px);
 }
 
 .logo {
-  height: 25px;
+  height: 30px;           /* Adjust as needed (e.g., 50px–60px) */
+  width: auto;            /* Maintain aspect ratio */
   cursor: pointer;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  object-fit: contain;
+  display: block;         /* Helps with alignment */
 }
+
 
 .navbar-menu {
   display: flex;
   list-style: none;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.85);
+  /* Suppression du fond et du cadre */
   padding: 6px;
   border-radius: 12px;
-  border: 1px solid #f0f0f0;
+  /* border: 1px solid #f0f0f0; */
+  /* background: rgba(255, 255, 255, 0.85); */
 }
 
-.navbar-menu li,
-.navbar-right-menu li {
+.navbar-menu li {
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-gray);
+  color: var(--gray-text);
   cursor: pointer;
   padding: 10px 16px;
   border-radius: 8px;
@@ -70,15 +67,13 @@ a {
   text-transform: capitalize;
 }
 
-.navbar-menu li:hover,
-.navbar-right-menu li:hover {
+.navbar-menu li:hover {
   color: var(--primary-green-dark);
   background: linear-gradient(135deg, #f0fff8 0%, #dbfbe7 100%);
   transform: translateY(-1px);
 }
 
-.navbar-menu li.active,
-.navbar-right-menu li.active {
+.navbar-menu li.active {
   color: var(--white);
   background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
   font-weight: 600;
@@ -88,18 +83,45 @@ a {
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 20px;
 }
 
 .navbar-right-menu {
   display: flex;
   list-style: none;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
+  /* Suppression du fond et du cadre */
+  padding: 6px;
+  border-radius: 12px;
+  /* border: 1px solid #f0f0f0; */
+  /* background: rgba(255, 255, 255, 0.85); */
 }
 
-.navbar button,
-.signin-btn {
+.navbar-right-menu li {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-text);
+  cursor: pointer;
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-transform: capitalize;
+}
+
+.navbar-right-menu li:hover {
+  color: var(--primary-green-dark);
+  background: linear-gradient(135deg, #f0fff8 0%, #dbfbe7 100%);
+  transform: translateY(-1px);
+}
+
+.navbar-right-menu li.active {
+  color: var(--white);
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+}
+
+.navbar button {
   padding: 10px 20px;
   background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
   color: white;
@@ -114,64 +136,33 @@ a {
   letter-spacing: 0.5px;
 }
 
-.navbar button:hover,
-.signin-btn:hover {
+.navbar button:hover {
   background: linear-gradient(135deg, #26c26a 0%, #1e9b50 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
 }
 
-.navbar button:active,
-.signin-btn:active {
+.navbar button:active {
   transform: translateY(0);
   box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
 }
 
-.navbar button:focus,
-.navbar-menu li:focus,
-.signin-btn:focus {
-  outline: 2px solid var(--primary-green-dark);
-  outline-offset: 2px;
-}
-
-/* === Modale === */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(20, 20, 20, 0.4);
-  backdrop-filter: blur(2px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.modal-content {
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 95%;
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
   .navbar {
     padding: 0 3%;
-    height: 60px;
+    height: 70px; /* Increased from 60px */
   }
 
   .logo {
-    height: 24px;
+    height: 45px; /* Increased from 32px */
   }
 
   .navbar-menu {
-    display: none; /* future: ajouter un menu burger */
+    display: none;
   }
 
-  .navbar-right {
-    gap: 15px;
+  .navbar-right-menu {
+    gap: 8px;
   }
 
   .navbar button {
@@ -183,14 +174,15 @@ a {
 @media (max-width: 480px) {
   .navbar {
     padding: 0 2%;
+    height: 65px; /* Increased from default */
   }
 
   .logo {
-    height: 22px;
+    height: 40px; /* Increased from 28px */
   }
 
-  .navbar-right {
-    gap: 12px;
+  .navbar-right-menu {
+    gap: 6px;
   }
 
   .navbar button {
@@ -199,10 +191,32 @@ a {
   }
 }
 
-/* Glassmorphism fallback */
 @supports (backdrop-filter: blur(10px)) {
   .navbar {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
   }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 20, 20, 0.4); /* couleur plus sombre mais légère */
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(4px);
+  will-change: backdrop-filter, opacity; /* Aide le GPU à préparer les effets */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease-in-out;
+}
+.navbar-menu a,
+.navbar-right-menu a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }

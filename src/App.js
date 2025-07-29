@@ -7,6 +7,7 @@ import Footer from './components/Footer/Footer.jsx';
 import ScrollToTopButton from './components/Scroll/ScrollToTopButton .jsx';
 import FindJob from './pages/FindJob/FindJob.jsx';
 import JobDetails from './components/JobDetails/JobDetails.jsx';
+import Forum from './pages/Forum/Forum.jsx';
 
 function App() {
     const [showSignIn, setShowSignIn] = useState(false);
@@ -18,6 +19,7 @@ function App() {
         <Route path='/' element={<Home/>} /> 
         <Route path='/FindJob' element={<FindJob/>} /> 
         <Route path="/FindJob/:id" element={<JobDetails />} />
+        <Route path='/Forum' element={<Forum/>} /> 
 
 
 

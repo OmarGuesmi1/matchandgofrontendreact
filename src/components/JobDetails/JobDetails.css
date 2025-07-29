@@ -1,226 +1,229 @@
 :root {
-  --green-primary: #2ecc71;
-  --green-light: #ecfdf5;
-  --green-dark: #27ae60;
+  --primary-green: #2ecc71;
+  --primary-green-dark: #27ae60;
+  --light-green-bg: #f4fffa;
   --white: #ffffff;
-  --gray-border: #e2e8f0;
-  --gray-light: #f8fafc;
-  --text-dark: #1f2937;
-  --text-muted: #6b7280;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  --radius-lg: 16px;
-  --radius-sm: 8px;
+  --gray-dark: #444;
+  --gray-medium: #888;
+  --gray-light: #ccc;
+  --border-color: #e6e6e6;
+  --box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  --radius: 16px;
+  --transition: all 0.3s ease;
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
-  background-color: var(--gray-light);
-  color: var(--text-dark);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  color: var(--gray-dark);
 }
 
-.job-details {
-  max-width: 1100px;
+.job-details-container {
+  max-width: 1200px;
   margin: 40px auto;
   background-color: var(--white);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius);
+  box-shadow: var(--box-shadow);
   overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: all 0.3s ease-in-out;
-}
-
-.company-banner-img {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  border-bottom: 1px solid var(--gray-border);
-}
-
-.company-header-content {
-  position: relative;
-  padding: 24px 32px;
-  background-color: var(--white);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
-  justify-content: center;    /* ✅ CENTRER verticalement dans le flux */
-  align-items: center;        /* ✅ CENTRER horizontalement */
-  text-align: center;         /* ✅ centrer le texte */
+}
+
+.job-details-container img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.job-details-content {
+  display: flex;
+  flex-direction: row;
+  padding: 40px;
+  gap: 40px;
+}
+
+/* ---------------- Sidebar ---------------- */
+
+.sidebar {
+  width: 340px;
+  padding-right: 32px;
+  border-right: 1px solid var(--border-color);
+}
+
+.company-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.company-header img {
+  width: 96px;
+  height: 96px;
+  border-radius: 12px;
+  object-fit: contain;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.company-header h2 {
+  font-size: 1.5rem;
+  color: var(--primary-green-dark);
+  margin: 8px 0;
+}
+
+.company-info p {
+  font-size: 0.95rem;
+  color: var(--gray-medium);
+  margin: 2px 0;
+}
+
+.job-summary-card {
+  background-color: var(--light-green-bg);
+  padding: 20px;
+  border-radius: var(--radius);
+  margin-bottom: 32px;
+  border: 1px solid var(--border-color);
+}
+
+.job-summary-card h3 {
+  font-size: 1.1rem;
+  color: var(--primary-green-dark);
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--primary-green);
+  padding-bottom: 8px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.summary-label {
+  color: var(--gray-dark);
+  font-weight: 500;
+}
+
+.summary-value {
+  color: var(--primary-green-dark);
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
-.company-logo {
-  position: absolute;
-  top: -50px;     /* ↕️ distance depuis le haut */
-  right: 39px;   /* ↔️ distance depuis la droite */
-  width: 80px;
-  height: 80px;
-  background-color: var(--green-light);
-  padding: 10px;
-  object-fit: contain;
-  border-radius: 12px;
-  border: 1px solid var(--gray-border);
-}
-
-
-.company-namee,
-.company-location {
-  text-align: center;
-}
-
-
-.company-namee {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: var(--green-dark);
-  margin: 0;
-}
-
-.company-location {
-  color: var(--text-muted);
+.action-buttons button {
+  padding: 12px;
   font-size: 0.95rem;
-}
-
-.job-main {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 32px;
-  padding: 32px;
-}
-
-.job-info h2 {
-  font-size: 1.6rem;
   font-weight: 600;
-  margin-bottom: 8px;
+  background-color: var(--primary-green);
+  border: none;
+  color: var(--white);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 3px 8px rgba(46, 204, 113, 0.3);
 }
 
-.job-meta {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 12px;
+.action-buttons button:hover {
+  background-color: var(--primary-green-dark);
 }
 
-.job-salary {
-  color: var(--green-primary);
-  font-weight: 600;
-  font-size: 1.1rem;
+/* ---------------- Main Content ---------------- */
+
+.main-content {
+  flex: 1;
+  padding-left: 8px;
+}
+
+.main-content h1 {
+  font-size: 2rem;
+  color: var(--primary-green-dark);
   margin-bottom: 24px;
 }
 
-.job-description {
+.main-content section {
   margin-bottom: 32px;
 }
 
-.job-description h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: var(--text-dark);
-}
-
-.job-description p {
-  line-height: 1.6;
-  color: var(--text-dark);
-}
-
-.job-tags-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-bottom: 32px;
-}
-
-.job-tag {
-  display: inline-block;
-  background-color: var(--green-light);
-  color: var(--text-dark);
-  padding: 8px 14px;
-  margin: 6px 6px 0 0;
-  border-radius: 50px;
-  font-size: 0.85rem;
-  transition: background-color 0.2s;
-}
-
-.job-tag:hover {
-  background-color: #d1fae5;
-}
-
-.job-dates p {
-  margin: 6px 0;
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-.company-profile {
-  background-color: var(--white);
-  border: 1px solid var(--gray-border);
-  padding: 24px;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-}
-
-.company-profile h3 {
-  color: var(--green-dark);
+.main-content section h3 {
   font-size: 1.2rem;
   margin-bottom: 12px;
+  color: var(--gray-dark);
+  border-left: 4px solid var(--primary-green);
+  padding-left: 12px;
 }
 
-.company-profile p {
-  color: var(--text-dark);
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.job-not-found {
-  text-align: center;
-  padding: 80px 20px;
-  font-size: 1.5rem;
-  color: red;
-}
-
-@media (max-width: 768px) {
-  .job-main {
-    grid-template-columns: 1fr;
-    padding: 20px;
-  }
-
-  .company-header-content {
-    flex-direction: column;
-    text-align: center;
-    padding: 20px;
-  }
-
-  .company-logo {
-    width: 70px;
-    height: 70px;
-  }
-}
-.apply-button {
-  margin: 20px 0;
-  padding: 12px 28px;
-  background-color: #27ae60; /* Blue */
-  color: white;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.main-content p {
   font-size: 1rem;
-  display: inline-block;
+  line-height: 1.6;
+  color: var(--gray-dark);
 }
 
-.apply-button:hover {
-  background-color: #27ae60; /* Darker blue on hover */
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.apply-button:focus {
-  outline: 3px solid #93c5fd; /* Light blue outline for accessibility */
-  outline-offset: 2px;
+.skill-tag {
+  background-color: var(--primary-green);
+  color: var(--white);
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  border-radius: 20px;
+  font-weight: 500;
+  transition: var(--transition);
 }
 
-/* Optional: Add some spacing below description for visual clarity */
-.job-description {
-  margin-bottom: 1rem;
+.skill-tag:hover {
+  background-color: var(--primary-green-dark);
 }
 
-/* You may adjust the color #2563eb and #1e40af to fit your color scheme */
+.no-data {
+  color: var(--gray-medium);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+ul {
+  padding-left: 24px;
+}
+
+ul li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 992px) {
+  .job-details-content {
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding-right: 0;
+    border-right: none;
+    margin-bottom: 32px;
+  }
+
+  .main-content {
+    padding-left: 0;
+  }
+
+  .action-buttons {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .action-buttons button {
+    flex: 1;
+  }
+}
