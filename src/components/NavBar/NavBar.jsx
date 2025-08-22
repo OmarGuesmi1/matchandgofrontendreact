@@ -3,6 +3,8 @@ import './NavBar.css';
 import SignIn from '../SignIn/SignIn.jsx';
 import { Link } from 'react-router-dom';
 import { assets } from '../../assets/assets';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const NavBar = ({ showSignIn, setShowSignIn }) => {
   const [menu, setMenu] = useState("home");
@@ -23,11 +25,15 @@ const NavBar = ({ showSignIn, setShowSignIn }) => {
   }, [showSignIn]);
 
   // Fonction logout
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    alert("🚪 Logged out successfully!");
-  };
+const handleLogout = () => {
+  
+  localStorage.removeItem("token");
+  setIsLoggedIn(false);
+  toast.info("🚪 Logged out successfully!");
+};
+
+
+
 
   return (
     <>
@@ -60,7 +66,7 @@ const NavBar = ({ showSignIn, setShowSignIn }) => {
             <SignIn 
               onClose={(loggedIn) => {
                 setShowSignIn(false);
-                if (loggedIn) setIsLoggedIn(true); // ⚡ si login réussi → bouton devient Log out
+                if (loggedIn) setIsLoggedIn(true); 
               }} 
             />
           </div>
