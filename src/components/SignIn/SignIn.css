@@ -36,12 +36,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .signin-image {
   width: 100%;
-  height: auto;
-  aspect-ratio: 9 / 16;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -174,9 +174,11 @@
   .signin-card {
     width: 90%;
   }
+
   .signin-logo {
     width: 130px;
   }
+
   .signin-title {
     font-size: 1.5rem;
   }
@@ -232,4 +234,31 @@
     right: 10px;
     font-size: 1.3rem;
   }
+}
+.signup-link {
+  color: #e3342f; /* rouge */
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer; /* montre que c'est cliquable */
+  transition: color 0.2s ease;
+}
+
+.signup-link:hover {
+  color: #b71c1c; /* devient plus foncé au survol */
+}
+.company-text {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.company-text .signup-link {
+  color: #e3342f;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.company-text .signup-link:hover {
+  color: #b71c1c;
 }

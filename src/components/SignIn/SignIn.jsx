@@ -1,96 +1,169 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './SignIn.css';
-import { assets } from '../../assets/assets'; // Assure-toi que assets.sideimage est bien défini
-import { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import de Link pour la navigation
-
+import { assets } from '../../assets/assets';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CompanySignUpForm from '../CompanySignUpForm/CompanySignUpForm'; // <-- IMPORT CORRECT
 
 const SignIn = ({ onClose }) => {
-  const [email, setEmail] = useState("");  // ⚡ Utiliser email
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [isCompany, setIsCompany] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    const url = isSignUp
+      ? "http://localhost:7001/api/auth/register"
+      : "http://localhost:7001/api/auth/login";
+
+    const body = isSignUp
+      ? { username, email, password, role: isCompany ? "company" : "candidate" }
+      : { email, password };
 
     try {
-      const res = await fetch("http://localhost:7001/api/auth/login", {
+      const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(body),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || "Login failed");
+        toast.error(data.message || (isSignUp ? "Registration failed" : "Login failed"));
+        setLoading(false);
         return;
       }
 
-      // Sauvegarde du token JWT
-      localStorage.setItem("token", data.token);
+      if (isSignUp) {
+        toast.success(data.message || "✅ Registration successful!");
+        setIsSignUp(false);
+        setIsCompany(false);
+      } else {
+        localStorage.setItem("token", data.token);
+        toast.success("✅ Login success!");
+        setTimeout(() => onClose(true), 800);
+      }
 
-      alert("✅ Login success!");
-      onClose(); // fermer la modal
+      setUsername("");
+      setEmail("");
+      setPassword("");
     } catch (err) {
       console.error(err);
-      setError("Something went wrong");
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
+
+  // --- Si mode company, afficher le CompanySignUpForm ---
+  if (isCompany) {
+    return (
+      <div className="signin-container">
+        <div className="signin-card">
+          <button className="close-btn" onClick={() => onClose(false)}>✕</button>
+
+          <div className="signin-left">
+            <img src={assets.sideimage} alt="Illustration" className="signin-image" />
+          </div>
+
+          <div className="signin-right">
+            <img src={assets.namelogo} alt="Logo" className="signin-logo" />
+            <h2 className="signin-title">Company Registration</h2>
+
+            <CompanySignUpForm onClose={onClose} />
+
+            <p className="signup-text">
+              Not a recruiter?{" "}
+              <span onClick={() => setIsCompany(false)} className="signup-link btn-link">
+                Back to Candidate
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // --- Sinon mode normal SignIn / SignUp ---
   return (
     <div className="signin-container">
       <div className="signin-card">
-        {/* ✅ Bouton de fermeture dans la card */}
-        <button className="close-btn" onClick={onClose}>✕</button>
+        <button className="close-btn" onClick={() => onClose(false)}>✕</button>
 
-        {/* Partie gauche : image */}
         <div className="signin-left">
           <img src={assets.sideimage} alt="Illustration" className="signin-image" />
         </div>
 
-        {/* Partie droite : formulaire */}
         <div className="signin-right">
           <img src={assets.namelogo} alt="Logo" className="signin-logo" />
-          <h2 className="signin-title">Welcome Back</h2>
+          <h2 className="signin-title">{isSignUp ? "Create Account" : "Welcome Back"}</h2>
 
-          <form className="signin-form"onSubmit={handleSubmit}>
-            <input type="email" placeholder="Email" value={email}
+          <form className="signin-form" onSubmit={handleSubmit}>
+            {isSignUp && (
+              <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            )}
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required/>
-            <input type="password" placeholder="Password" value={password}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required />
-               {error && <p style={{ color: "red" }}>{error}</p>}
-            <div className="form-links">
-              <Link to="/forgot-password" className="forgot-link">Forgot your password? </Link>
-            </div>
-            <button type="submit">Login</button>
+              required
+            />
+
+            {!isSignUp && (
+              <div className="form-links">
+                <a href="/forgot-password" className="forgot-link">Forgot your password?</a>
+              </div>
+            )}
+
+            <button type="submit" disabled={loading}>
+              {loading ? (isSignUp ? "Registering..." : "Logging in...") : (isSignUp ? "Sign Up" : "Login")}
+            </button>
           </form>
 
-          <div className="signin-socials">
-            <p>Or sign in with</p>
-            <div className="social-buttons">
-              <a href="https://accounts.google.com/signin" target="_blank" rel="noopener noreferrer">
-                <button className="social-btn">
-                  <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google" />
-                </button>
-              </a>
-              <a href="https://www.linkedin.com/login" target="_blank" rel="noopener noreferrer">
-                <button className="social-btn">
-                  <img src="https://img.icons8.com/color/48/linkedin.png" alt="LinkedIn" />
-                </button>
-              </a>
-            </div>
-          </div>
+          {/* Lien “I’m a recruiter?” */}
+          {isSignUp && !isCompany && (
+            <p className="company-text">
+              I'm a recruiter?{" "}
+              <span onClick={() => setIsCompany(true)} className="signup-link btn-link">
+                Click here
+              </span>
+            </p>
+          )}
 
-          <div className="signup-link">
-            Don’t have an account? <Link to="/signup">Join here</Link>
-          </div>
-
-          <p className="terms-text">
-            By joining, you agree to the <strong>MATCH&GO Terms of Service</strong> and to occasionally receive emails from us.
-            <br />
-            Please read our <strong>Privacy Policy</strong> to learn how we use your personal data.
+          <p className="signup-text">
+            {isSignUp ? (
+              <>Already have an account?{" "}
+                <span onClick={() => { setIsSignUp(false); setIsCompany(false); }} className="signup-link btn-link">
+                  Sign in
+                </span>
+              </>
+            ) : (
+              <>Don't have an account?{" "}
+                <span onClick={() => { setIsSignUp(true); setIsCompany(false); }} className="signup-link btn-link">
+                  Sign up
+                </span>
+              </>
+            )}
           </p>
         </div>
       </div>
