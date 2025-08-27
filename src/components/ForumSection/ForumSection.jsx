@@ -48,9 +48,14 @@ const ForumSection = () => {
                 <article className="fs-post-card" key={post._id}>
                   <div className="fs-user-info">
                     <img
-                      src={`http://localhost:7001/uploads/${post.author.logo || "client.png"}`}
+                      src={
+                        post.author.logo
+                          ? `http://localhost:7001/images/${post.author.logo}`
+                          : `http://localhost:7001/images/client.png`
+                      }
                       alt={post.author.username}
                       className="fs-user-photo"
+                      onError={(e) => { e.target.src = `http://localhost:7001/images/client.png`; }}
                     />
                     <div>
                       <h4 className="fs-user-name">{post.author.username}</h4>
@@ -62,7 +67,6 @@ const ForumSection = () => {
 
                   <div className="fs-post-reactions">
                     <span>👍 {post.reactionsCount}</span>
-                    {/* ⚡ si tu veux ajouter commentairesCount tu peux modifier ton contrôleur */}
                   </div>
                 </article>
               ))
