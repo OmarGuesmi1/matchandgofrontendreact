@@ -1,9 +1,15 @@
 import React from 'react';
 import './CompaniesExplore.css';
-import { categories } from '../../assets/assets';
-
-const CompaniesExplore= ({ category, setCategory }) => {
-   
+const CompaniesExplore = ({ category, setCategory }) => {
+   const categories = [
+  "All",
+  "Tech",
+  "Advertising&Marketing",
+  "Culture&Media",
+  "Consulting&Audit",
+  "Education&Training",
+  "Finance&Banking"
+];
   return (
     <div className="explore-companies">
       <h1>Explore companies</h1>
@@ -22,6 +28,5 @@ const CompaniesExplore= ({ category, setCategory }) => {
     </div>
   );
 }
-
 
 export default CompaniesExplore;

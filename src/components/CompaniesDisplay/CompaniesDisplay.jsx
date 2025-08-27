@@ -1,12 +1,31 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './CompanieDisplay.css';
-import { companies } from '../../assets/assets';
 
 const CompaniesDisplay = ({ category }) => {
-    const filteredCompanies = category === 'All'
-    ? companies
-    : companies.filter(company => company.category === category);
-      const scrollContainerRef = useRef(null);
+  const [companies, setCompanies] = useState([]);
+  const scrollContainerRef = useRef(null);
+
+  // Charger les entreprises depuis ton backend
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        let url = "http://localhost:7001/api/users/getAllCompany"; 
+        if (category && category !== "All") {
+          url = `http://localhost:7001/api/users/getCompaniesByCategory/${category}`;
+        }
+
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        // ton backend retourne { companies: [...] }
+        setCompanies(data.companies || []);
+      } catch (err) {
+        console.error("Erreur lors du chargement des entreprises :", err);
+      }
+    };
+
+    fetchCompanies();
+  }, [category]);
 
   const scrollLeft = () => {
     scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
@@ -15,31 +34,46 @@ const CompaniesDisplay = ({ category }) => {
   const scrollRight = () => {
     scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
   };
+
   return (
-    <>
-  <div className="scroll-wrapper">
+    <div className="scroll-wrapper">
       <button className="scroll-arrow left" onClick={scrollLeft}>{'<'}</button>
       <div className="company-list-horizontal" ref={scrollContainerRef}>
-        {filteredCompanies.map(company => (
-          <div key={company.id} className="company-card">
-            <img src={company.cover} alt="cover" className="company-cover" />
+        {companies.map(company => (
+          <div key={company._id} className="company-card">
+            {/* Cover image */}
+            <img 
+              src={`http://localhost:7001/images/${company.cover_User}`} 
+              alt="cover" 
+              className="company-cover" 
+            />
+
             <div className="company-content">
-              <img src={company.logo} alt="logo" className="company-logo" />
-              <h2>{company.name}</h2>
-              <p>{company.description}</p>
-              <p><strong>Location:</strong> {company.location}</p>
-              <p><strong>Job:</strong> {company.jobTitle}</p>
-              <p><strong>Places:</strong> {company.jobSlots}</p>
-              <button className="view-offer-button" onClick={() => alert(`Viewing offer for ${company.name}`)}>Details</button>
+              {/* Logo */}
+              <img 
+                src={`http://localhost:7001/images/${company.logo}`} 
+                alt="logo" 
+                className="company-logo" 
+              />
+              
+              <h2>{company.username}</h2>
+              <p>{company.companyInfo?.description}</p>
+              <p><strong>Location:</strong> {company.companyInfo?.location}</p>
+              <p><strong>Founded:</strong> {company.companyInfo?.founded}</p>
+              <p><strong>Employees:</strong> {company.companyInfo?.size}</p>
+              <p>
+                <strong>Website:</strong>{' '}
+                <a href={company.companyInfo?.website} target="_blank" rel="noopener noreferrer">
+                  {company.companyInfo?.website}
+                </a>
+              </p>
             </div>
           </div>
         ))}
       </div>
       <button className="scroll-arrow right" onClick={scrollRight}>{'>'}</button>
     </div>
-    
-      </>
   );
-}
+};
 
 export default CompaniesDisplay;
