@@ -1,9 +1,25 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './ForumSection.css';
-import { assets, forumPosts } from '../../assets/assets';
+import { assets } from '../../assets/assets';
 
 const ForumSection = () => {
   const containerRef = useRef(null);
+  const [posts, setPosts] = useState([]);
+
+  // Charger les posts depuis le backend
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch("http://localhost:7001/api/users/getpostwithmanyreaction");
+        const data = await res.json();
+        setPosts(data); // 🔥 on stocke les vrais posts
+      } catch (error) {
+        console.error("Erreur fetch posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   const scrollLeft = () => {
     containerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
@@ -15,39 +31,48 @@ const ForumSection = () => {
 
   return (
     <section className="fs-forum-section">
-  <div className="fs-forum-container">
-    <img src={assets.quote} alt="quote" className="fs-quote-image" />
-    <header className="fs-forum-header">
-      <img src={assets.matchgorforum} alt="Forum Logo" className="fs-forum-brand" />
-      <h2 className="fs-forum-title">Top Posts</h2>
-    </header>
+      <div className="fs-forum-container">
+        <img src={assets.quote} alt="quote" className="fs-quote-image" />
+        <header className="fs-forum-header">
+          <img src={assets.matchgorforum} alt="Forum Logo" className="fs-forum-brand" />
+          <h2 className="fs-forum-title">Top Posts</h2>
+        </header>
 
-    <button className="fs-scroll-btn left" onClick={scrollLeft}>‹</button>
-    <button className="fs-scroll-btn right" onClick={scrollRight}>›</button>
+        <button className="fs-scroll-btn left" onClick={scrollLeft}>‹</button>
+        <button className="fs-scroll-btn right" onClick={scrollRight}>›</button>
 
-    <div className="fs-posts-wrapper" ref={containerRef}>
-      <div className="fs-posts-container">
-        {forumPosts.map((post) => (
-          <article className="fs-post-card" key={post.id}>
-            <div className="fs-user-info">
-              <img src={post.userPhoto} alt={`${post.firstName} ${post.lastName}`} className="fs-user-photo" />
-              <div>
-                <h4 className="fs-user-name">{post.firstName} {post.lastName}</h4>
-                <p className="fs-user-role">{post.role}</p>
-              </div>
-            </div>
-            <p className="fs-post-content">"{post.content}"</p>
-            <div className="fs-post-reactions">
-              <span>👍 {post.likes}</span>
-              <span>💬 {post.comments}</span>
-            </div>
-          </article>
-        ))}
+        <div className="fs-posts-wrapper" ref={containerRef}>
+          <div className="fs-posts-container">
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <article className="fs-post-card" key={post._id}>
+                  <div className="fs-user-info">
+                    <img
+                      src={`http://localhost:7001/uploads/${post.author.logo || "client.png"}`}
+                      alt={post.author.username}
+                      className="fs-user-photo"
+                    />
+                    <div>
+                      <h4 className="fs-user-name">{post.author.username}</h4>
+                      <p className="fs-user-role">{post.author.role}</p>
+                    </div>
+                  </div>
+
+                  <p className="fs-post-content">"{post.content}"</p>
+
+                  <div className="fs-post-reactions">
+                    <span>👍 {post.reactionsCount}</span>
+                    {/* ⚡ si tu veux ajouter commentairesCount tu peux modifier ton contrôleur */}
+                  </div>
+                </article>
+              ))
+            ) : (
+              <p className="fs-empty">Aucun post trouvé 😢</p>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-
+    </section>
   );
 };
 
