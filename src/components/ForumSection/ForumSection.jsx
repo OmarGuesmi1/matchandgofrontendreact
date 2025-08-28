@@ -67,6 +67,8 @@ const ForumSection = () => {
 
                   <div className="fs-post-reactions">
                     <span>👍 {post.reactionsCount}</span>
+                    <span>💬 {post.commentsCount}</span>
+                    <span>🔄 {post.sharesCount}</span>
                   </div>
                 </article>
               ))
