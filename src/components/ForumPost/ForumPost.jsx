@@ -15,9 +15,12 @@ const ForumPost = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showReactions, setShowReactions] = useState(null);
-  const [reactions, setReactions] = useState({}); // { postId: [liste réactions] }
+  const [reactions, setReactions] = useState({});
+  const [showComments, setShowComments] = useState(null);
+  const [comments, setComments] = useState({});
+  const [commentText, setCommentText] = useState({});
 
-  // 🔹 Récupération des posts
+  // 🔹 Fetch posts
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -35,7 +38,7 @@ const ForumPost = () => {
     fetchPosts();
   }, []);
 
-  // 🔹 Ajouter / retirer une réaction
+  // 🔹 Handle reaction
   const handleReaction = async (postId, type) => {
     try {
       const token = localStorage.getItem("token");
@@ -44,19 +47,13 @@ const ForumPost = () => {
         { type },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      // 🔄 Recharge les posts
-      const updatedPosts = await axios.get("http://localhost:7001/api/users/posts", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setPosts(updatedPosts.data);
-      setShowReactions(null);
+      fetchReactions(postId);
     } catch (err) {
       console.error("Erreur lors de la réaction :", err.response?.data || err);
     }
   };
 
-  // 🔹 Charger les réactions d’un post
+  // 🔹 Fetch reactions
   const fetchReactions = async (postId) => {
     try {
       const token = localStorage.getItem("token");
@@ -70,6 +67,39 @@ const ForumPost = () => {
     }
   };
 
+  // 🔹 Fetch comments
+  const fetchComments = async (postId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(
+        `http://localhost:7001/api/users/posts/${postId}/comments`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      // ✅ Stocker uniquement le tableau des commentaires
+      setComments((prev) => ({ ...prev, [postId]: res.data.comments }));
+    } catch (err) {
+      console.error("Erreur lors de la récupération des commentaires :", err);
+    }
+  };
+
+  // 🔹 Add comment
+  const handleComment = async (postId) => {
+    if (!commentText[postId] || commentText[postId].trim() === "") return;
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post(
+        `http://localhost:7001/api/users/posts/${postId}/comments`,
+        { content: commentText[postId] },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCommentText((prev) => ({ ...prev, [postId]: "" }));
+      fetchComments(postId);
+    } catch (err) {
+      console.error("Erreur lors de l'ajout du commentaire :", err.response?.data || err);
+    }
+  };
+
   if (loading) return <p>Chargement des posts...</p>;
 
   return (
@@ -79,11 +109,11 @@ const ForumPost = () => {
       ) : (
         posts.map((post) => (
           <div key={post._id} className="post-card">
-            {/* 🔹 Auteur */}
+            {/* 🔹 Author */}
             <div className="post-author">
               <img
                 src={`http://localhost:7001/images/${post.author.logo || "default.png"}`}
-                alt="user"
+                alt={post.author.username}
                 className="author-logo"
               />
               <div>
@@ -92,7 +122,7 @@ const ForumPost = () => {
               </div>
             </div>
 
-            {/* 🔹 Contenu */}
+            {/* 🔹 Content */}
             <p className="post-content">{post.content}</p>
 
             {/* 🔹 Media */}
@@ -118,67 +148,109 @@ const ForumPost = () => {
               </div>
             )}
 
-            {/* 🔹 Réactions + commentaires */}
+            {/* 🔹 Reactions + Comments */}
             <div className="post-stats">
-              {/* Bouton principal (ouvre le menu de réactions) */}
               <span
                 className="reaction-btn"
                 onClick={() => {
                   setShowReactions(showReactions === post._id ? null : post._id);
-                  fetchReactions(post._id); // 👉 charge les réactions regroupées
+                  fetchReactions(post._id);
                 }}
               >
                 <FaRegThumbsUp /> {post.reactionsCount || 0}
               </span>
 
-              {/* Menu de réactions */}
-              {showReactions === post._id && (
-                <div className="reaction-menu">
-                  {/* 👉 Options pour ajouter une réaction */}
-                  {Object.entries(reactionsMap).map(([type, emoji]) => (
-                    <span
-                      key={type}
-                      className="reaction-option"
-                      onClick={() => handleReaction(post._id, type)}
-                    >
-                      {emoji}
-                    </span>
-                  ))}
-
-                  {/* 👉 Liste des réactions existantes */}
-                  <div className="reaction-list">
-                    {reactions[post._id] ? (
-                      Object.entries(reactions[post._id]).map(([type, data]) => (
-                        <div key={type} className="reaction-group">
-                          <span className="reaction-type">
-                            {reactionsMap[type]} {data.count}
-                          </span>
-                          <div className="reaction-users">
-                            {data.users.map((user) => (
-                              <div key={user._id} className="reaction-user">
-                                <img
-                                  src={`http://localhost:7001/images/${user.logo || "default.png"}`}
-                                  alt={user.username}
-                                  className="reaction-user-logo"
-                                />
-                                <span>{user.username}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <p>Aucune réaction</p>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              <span>
+              <span
+                className="comment-btn"
+                onClick={() => {
+                  const postId = post._id;
+                  setShowComments(showComments === postId ? null : postId);
+                  fetchComments(postId);
+                }}
+              >
                 <FaRegComment /> {post.commentsCount || 0}
               </span>
             </div>
 
+            {/* 🔹 Reaction menu */}
+            {showReactions === post._id && reactions[post._id] && (
+              <div className="reaction-menu">
+                {Object.entries(reactionsMap).map(([type, emoji]) => (
+                  <span
+                    key={type}
+                    className="reaction-option"
+                    onClick={() => handleReaction(post._id, type)}
+                  >
+                    {emoji}
+                  </span>
+                ))}
+                <div className="reaction-list">
+                  {Object.entries(reactions[post._id]).map(([type, data]) => (
+                    <div key={type} className="reaction-group">
+                      <span className="reaction-type">
+                        {reactionsMap[type]} {data.count}
+                      </span>
+                      <div className="reaction-users">
+                        {data.users.map((user) => (
+                          <div key={user._id} className="reaction-user">
+                            <img
+                              src={`http://localhost:7001/images/${user.logo || "default.png"}`}
+                              alt={user.username}
+                              className="reaction-user-logo"
+                            />
+                            <span>{user.username}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 🔹 Comment list */}
+            {/* 🔹 Comment list */}
+{showComments === post._id && comments[post._id] && (
+  <div className="comment-list">
+    {comments[post._id].length > 0 ? (
+      comments[post._id].map((comment) => (
+        <div key={comment._id} className="comment-item">
+          <img
+            src={`http://localhost:7001/images/${comment.author.logo || "default.png"}`}
+            alt={comment.author.username}
+            className="comment-user-logo"
+          />
+          <div className="comment-content">
+            <span>
+              <strong>{comment.author.username}</strong> ({comment.author.role}) :
+              {comment.content}
+            </span>
+            <small className="comment-date">
+              {new Date(comment.createdAt).toLocaleString()}
+            </small>
+          </div>
+        </div>
+      ))
+    ) : (
+      <p>Aucun commentaire</p>
+    )}
+  </div>
+)}
+
+
+            {/* 🔹 Add comment */}
+            <div className="post-comment">
+              <input
+                type="text"
+                placeholder="Écrire un commentaire..."
+                value={commentText[post._id] || ""}
+                onChange={(e) =>
+                  setCommentText((prev) => ({ ...prev, [post._id]: e.target.value }))
+                }
+                onKeyDown={(e) => e.key === "Enter" && handleComment(post._id)}
+              />
+              <button onClick={() => handleComment(post._id)}>Commenter</button>
+            </div>
           </div>
         ))
       )}
