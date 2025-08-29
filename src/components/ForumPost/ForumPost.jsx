@@ -1,136 +1,187 @@
-import React, { useState } from 'react';
-import './ForumPost.css';
-import { FaRegThumbsUp, FaRegCommentDots, FaShare } from 'react-icons/fa';
-import { posts as initialPosts } from '../../assets/assets';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { FaRegComment, FaRegThumbsUp } from "react-icons/fa";
+import "./ForumPost.css";
+
+const reactionsMap = {
+  like: "👍",
+  celebrate: "🎉",
+  support: "❤️",
+  insightful: "💡",
+  curious: "🤔",
+};
 
 const ForumPost = () => {
-  // State pour gérer quels posts sont likés
-  const [likedPosts, setLikedPosts] = useState({});
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showReactions, setShowReactions] = useState(null);
+  const [reactions, setReactions] = useState({}); // { postId: [liste réactions] }
 
-  // State pour afficher/masquer commentaires par post
-  const [visibleComments, setVisibleComments] = useState({});
+  // 🔹 Récupération des posts
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.get("http://localhost:7001/api/users/posts", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setPosts(res.data);
+      } catch (err) {
+        console.error("Erreur lors de la récupération des posts :", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPosts();
+  }, []);
 
-  // State pour les nouveaux commentaires tapés (par post)
-  const [newComment, setNewComment] = useState({});
+  // 🔹 Ajouter / retirer une réaction
+  const handleReaction = async (postId, type) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post(
+        `http://localhost:7001/api/users/posts/${postId}/reactions`,
+        { type },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-  // State pour stocker localement les posts avec commentaires modifiés
-  const [posts, setPosts] = useState(initialPosts);
-
-  // Toggle Like
-  const toggleLike = (postId) => {
-    setLikedPosts((prev) => ({ ...prev, [postId]: !prev[postId] }));
+      // 🔄 Recharge les posts
+      const updatedPosts = await axios.get("http://localhost:7001/api/users/posts", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setPosts(updatedPosts.data);
+      setShowReactions(null);
+    } catch (err) {
+      console.error("Erreur lors de la réaction :", err.response?.data || err);
+    }
   };
 
-  // Toggle affichage commentaires
-  const toggleComments = (postId) => {
-    setVisibleComments((prev) => ({ ...prev, [postId]: !prev[postId] }));
+  // 🔹 Charger les réactions d’un post
+  const fetchReactions = async (postId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(
+        `http://localhost:7001/api/users/posts/${postId}/reactions`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setReactions((prev) => ({ ...prev, [postId]: res.data }));
+    } catch (err) {
+      console.error("Erreur lors de la récupération des réactions :", err);
+    }
   };
 
-  // Changement dans l'input commentaire
-  const handleCommentChange = (postId, value) => {
-    setNewComment((prev) => ({ ...prev, [postId]: value }));
-  };
-
-  // Ajouter un nouveau commentaire au post
-  const handleAddComment = (postId) => {
-    const commentText = newComment[postId]?.trim();
-    if (!commentText) return;
-
-    setPosts((prevPosts) =>
-      prevPosts.map((post) => {
-        if (post.id === postId) {
-          // Création d'un nouveau commentaire avec id unique (timestamp)
-          const newCmt = {
-            id: Date.now(),
-            author: "You",  // Tu peux changer ça selon ton système d'auth
-            text: commentText,
-          };
-          return {
-            ...post,
-            commentsList: [...(post.commentsList || []), newCmt],
-            comments: (post.comments || 0) + 1,
-          };
-        }
-        return post;
-      })
-    );
-
-    // Vider l'input après ajout
-    setNewComment((prev) => ({ ...prev, [postId]: '' }));
-  };
+  if (loading) return <p>Chargement des posts...</p>;
 
   return (
-    <div className="forum-posts-container">
-      {posts.map((post) => {
-        const isLiked = likedPosts[post.id] || false;
-        const likesCount = post.reactions + (isLiked ? 1 : 0);
-
-        return (
-          <div key={post.id} className="forum-post-card">
-            <div className="post-header">
-              <img src={post.avatar} alt="avatar" className="post-avatar" />
+    <div className="forum-posts">
+      {posts.length === 0 ? (
+        <p>Aucun post disponible.</p>
+      ) : (
+        posts.map((post) => (
+          <div key={post._id} className="post-card">
+            {/* 🔹 Auteur */}
+            <div className="post-author">
+              <img
+                src={`http://localhost:7001/images/${post.author.logo || "default.png"}`}
+                alt="user"
+                className="author-logo"
+              />
               <div>
-                <h4 className="post-author">{post.name}</h4>
-                <span className="post-date">{post.date}</span>
+                <h4>{post.author.username}</h4>
+                <small>{post.author.role}</small>
               </div>
             </div>
 
+            {/* 🔹 Contenu */}
             <p className="post-content">{post.content}</p>
 
-            {post.image && <img src={post.image} alt="post" className="post-media" />}
-            {post.video && (
-              <video controls className="post-media">
-                <source src={post.video} type="video/mp4" />
-              </video>
-            )}
-
-            <div className="post-stats">
-              <span>{likesCount} Likes</span>
-              <span>{post.comments} Comments</span>
-            </div>
-
-            <div className="post-actions">
-              <button
-                onClick={() => toggleLike(post.id)}
-                className={isLiked ? 'liked' : ''}
-                aria-label="Like post"
-              >
-                <FaRegThumbsUp /> Like
-              </button>
-              <button onClick={() => toggleComments(post.id)} aria-label="Toggle comments">
-                <FaRegCommentDots /> Comment
-              </button>
-              <button aria-label="Share post"><FaShare /> Share</button>
-            </div>
-
-            {visibleComments[post.id] && (
-              <div className="comment-section">
-                <div className="comment-list">
-                  {(post.commentsList || []).map((c) => (
-                    <div key={c.id} className="comment-item">
-                      <strong>{c.author}</strong>: {c.text}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="comment-input">
-                  <input
-                    type="text"
-                    placeholder="Write a comment..."
-                    value={newComment[post.id] || ''}
-                    onChange={(e) => handleCommentChange(post.id, e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') handleAddComment(post.id);
-                    }}
-                    aria-label="Write a comment"
-                  />
-                  <button onClick={() => handleAddComment(post.id)}>Post</button>
-                </div>
+            {/* 🔹 Media */}
+            {(post.photo || post.document) && (
+              <div className="post-media">
+                {post.photo && post.photo !== "client.png" && (
+                  <img src={`http://localhost:7001${post.photo}`} alt="post" />
+                )}
+                {post.document && post.document !== "client.png" && (
+                  <>
+                    {post.document.endsWith(".pdf") ? (
+                      <iframe
+                        src={`http://localhost:7001${post.document}`}
+                        width="100%"
+                        height="250px"
+                        title="Document Preview"
+                      ></iframe>
+                    ) : (
+                      <img src={`http://localhost:7001${post.document}`} alt="document" />
+                    )}
+                  </>
+                )}
               </div>
             )}
+
+            {/* 🔹 Réactions + commentaires */}
+            <div className="post-stats">
+              {/* Bouton principal (ouvre le menu de réactions) */}
+              <span
+                className="reaction-btn"
+                onClick={() => {
+                  setShowReactions(showReactions === post._id ? null : post._id);
+                  fetchReactions(post._id); // 👉 charge les réactions regroupées
+                }}
+              >
+                <FaRegThumbsUp /> {post.reactionsCount || 0}
+              </span>
+
+              {/* Menu de réactions */}
+              {showReactions === post._id && (
+                <div className="reaction-menu">
+                  {/* 👉 Options pour ajouter une réaction */}
+                  {Object.entries(reactionsMap).map(([type, emoji]) => (
+                    <span
+                      key={type}
+                      className="reaction-option"
+                      onClick={() => handleReaction(post._id, type)}
+                    >
+                      {emoji}
+                    </span>
+                  ))}
+
+                  {/* 👉 Liste des réactions existantes */}
+                  <div className="reaction-list">
+                    {reactions[post._id] ? (
+                      Object.entries(reactions[post._id]).map(([type, data]) => (
+                        <div key={type} className="reaction-group">
+                          <span className="reaction-type">
+                            {reactionsMap[type]} {data.count}
+                          </span>
+                          <div className="reaction-users">
+                            {data.users.map((user) => (
+                              <div key={user._id} className="reaction-user">
+                                <img
+                                  src={`http://localhost:7001/images/${user.logo || "default.png"}`}
+                                  alt={user.username}
+                                  className="reaction-user-logo"
+                                />
+                                <span>{user.username}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p>Aucune réaction</p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <span>
+                <FaRegComment /> {post.commentsCount || 0}
+              </span>
+            </div>
+
           </div>
-        );
-      })}
+        ))
+      )}
     </div>
   );
 };

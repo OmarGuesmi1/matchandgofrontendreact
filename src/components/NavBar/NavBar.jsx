@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 import { assets } from '../../assets/assets';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const NavBar = ({ showSignIn, setShowSignIn }) => {
   const [menu, setMenu] = useState("home");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate(); // ✅ hook de navigation
 
   // Vérifier si un token existe au chargement
   useEffect(() => {
@@ -26,11 +28,12 @@ const NavBar = ({ showSignIn, setShowSignIn }) => {
 
   // Fonction logout
 const handleLogout = () => {
-  
-  localStorage.removeItem("token");
-  setIsLoggedIn(false);
-  toast.info("🚪 Logged out successfully!");
-};
+    localStorage.removeItem("token");
+    setMenu("home"); // ✅ remettre le menu sur "home"
+    setIsLoggedIn(false);
+    toast.info("🚪 Logged out successfully!");
+    navigate("/"); // ✅ redirige immédiatement vers Home
+  };
 
 
 
@@ -43,7 +46,21 @@ const handleLogout = () => {
           <Link to="/"><li onClick={() => setMenu("home")} className={menu === "home" ? "active" : ""}>Home</li></Link>
           <Link to="/FindJob"><li onClick={() => setMenu("find-a-job")} className={menu === "find-a-job" ? "active" : ""}>Find a job</li></Link>
           <Link to="/find-company"><li onClick={() => setMenu("find-a-company")} className={menu === "find-a-company" ? "active" : ""}>Find a company</li></Link>
-          <Link to="/forum"><li onClick={() => setMenu("forum")} className={menu === "forum" ? "active" : ""}>Forum</li></Link>
+<Link 
+  to={isLoggedIn ? "/forum" : "#"} 
+  onClick={(e) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      toast.error("⚠️ Please sign in to access the forum!");
+      setShowSignIn(true); // ✅ ouvre la popup SignIn
+    } else {
+      setMenu("forum");
+    }
+  }}
+>
+  <li className={menu === "forum" ? "active" : ""}>Forum</li>
+</Link>
+
         </ul>
         <div className="navbar-right">
           <ul className='navbar-right-menu'>

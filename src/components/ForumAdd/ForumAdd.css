@@ -1,70 +1,210 @@
-.forum-card {
-  background-color: #ffffff;
+/* 🔹 Container principal */
+.forum-add {
+  background: #fff;
+  border: 1px solid #ddd;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  padding: 1rem;
-  max-width: 600px;
-  margin: 1.5rem auto;
-  border: 1px solid #e0e0e0;
+  padding: 15px;
+  margin: 40px auto 20px auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  width: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  position: relative; /* needed for positioning */
+
 }
 
-.forum-top {
+/* 🔹 Header avec logo + textarea */
+.forum-add-header {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
 }
 
-.forum-avatar {
+.user-logo {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.forum-input {
+/* 🔹 Zone texte + bouton emoji */
+.textarea-wrapper {
+  position: relative;
   flex: 1;
-  padding: 0.75rem 1rem;
-  border-radius: 25px;
-  border: 1px solid #ccc;
-  background-color: #f4f4f4;
-  font-size: 1rem;
-  transition: border-color 0.2s ease;
 }
 
-.forum-input:focus {
+.forum-textarea {
+  width: 100%;
+  resize: none;
+  border: none;
   outline: none;
-  border-color: var(--primary-green, #2ecc71);
-  background-color: #fff;
+  font-size: 15px;
+  background: #f3f6f9;
+  border-radius: 20px;
+  padding: 12px 42px 12px 15px; /* espace à droite pour emoji */
+  min-height: 60px;
+  line-height: 1.4;
+  box-sizing: border-box;
 }
 
-.forum-bottom {
-  display: flex;
-  justify-content: space-around;
-  padding-top: 0.75rem;
-  border-top: 1px solid #eee;
+/* 🔹 Bouton emoji */
+.emoji-btn {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
 }
 
-.forum-option {
+.emoji-btn:hover {
+  color: #4caf50;
+}
+
+/* 🔹 Picker emoji (flottant) */
+.emoji-popover {
+  position: absolute;
+  top: 60px;       /* Ajuste la hauteur */
+  left: 700px;    /* Le pousse à gauche du container */
+  z-index: 1000;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+/* 🔹 Prévisualisations */
+.preview-box {
+  position: relative;
+  display: inline-block;
+  margin: 10px 10px 0 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafafa;
+  padding: 5px;
+  vertical-align: top;
+}
+
+.preview-img {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+}
+
+.preview-pdf {
+  width: 150px;
+  height: 120px;
+  border: none;
+  border-radius: 6px;
+}
+
+.doc-preview {
+  padding: 10px;
+  font-size: 14px;
+  color: #444;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  color: #555;
-  font-size: 0.9rem;
+  gap: 5px;
+}
+
+/* 🔹 Bouton suppression (croix) */
+.cancel-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  width: 22px;
+  height: 22px;
   cursor: pointer;
-  transition: color 0.2s ease;
-  position: relative;
+  line-height: 20px;
+  text-align: center;
+  padding: 0;
 }
 
-.forum-option:hover {
-  color: var(--primary-green, #2ecc71);
+.cancel-btn:hover {
+  background: red;
 }
 
-.forum-icon {
-  font-size: 1.1rem;
+/* 🔹 Actions (bas du formulaire) */
+.forum-add-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.photo { color: #70b5f9; }
-.video { color: #7fc15e; }
-.doc { color: #e7a33e; }
-.article { color: #fc9295; }
+/* Boutons (ajout photo/doc/lien) */
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.action-btn:hover {
+  background: #f3f6f9;
+}
+
+.icon {
+  font-size: 18px;
+  color: #4caf50;
+}
+
+/* 🔹 Bouton Post */
+.post-btn {
+  background: #4caf50;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.post-btn:hover {
+  background: #388e3c;
+}
+
+/* 🔹 Section des liens */
+.media-url-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.media-url-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.media-url-input:focus {
+  border: 1px solid #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
